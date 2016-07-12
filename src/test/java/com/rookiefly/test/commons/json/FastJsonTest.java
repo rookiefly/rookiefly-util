@@ -16,7 +16,7 @@ public class FastJsonTest {
     @Test
     public void test01() {
 
-        Address address = new Address("hangzhou", "binjiang");
+        Address address = new Address("hangzhou", "binjiang", 0);
 
         Account account = new Account("1001", "rookiefly", 25, address);
 
@@ -36,5 +36,14 @@ public class FastJsonTest {
         map.put("address", address);
         map.put("account", account);
         JSON.toJSONString(map, filter, serializerFeatures);
+    }
+
+    @Test
+    public void test02() {
+        Address address = new Address("hangzhou", "binjiang", 0);
+        System.out.println(JSON.toJSONString(address));
+        String json = "{\"area\":\"binjiang\",\"city\":\"hangzhou\"}";
+        Address address1 = JSON.parseObject(json, Address.class);
+        System.out.println(address1);
     }
 }

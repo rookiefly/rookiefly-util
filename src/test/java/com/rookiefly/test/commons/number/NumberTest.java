@@ -91,7 +91,23 @@ public class NumberTest {
     public void testConvertString() {
         Double aDouble = Double.valueOf("9");
         BigDecimal amount = BigDecimal.valueOf(aDouble);
-        String format = new DecimalFormat("#.##").format(Double.valueOf(9.50));
+        String format = new DecimalFormat("#.##").format(BigDecimal.valueOf(0.10));
         System.out.println(format);
+    }
+
+    @Test
+    public void testArray(){
+        int[] a = new int[2];
+        System.out.println(a);
+        System.out.println(String.format("percent:%X%%", 5));
+        String processName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+        System.out.println(processName);
+    }
+
+    @Test
+    public void testConstact() {
+        Constant c = new Constant();
+        System.out.println(c.size);;
+        System.out.println(c.size);;
     }
 }

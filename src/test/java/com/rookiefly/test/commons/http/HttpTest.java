@@ -47,7 +47,7 @@ public class HttpTest {
                 });
 
         try {
-            System.out.println(f.get());
+            System.out.println("Response Code: " + f.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -63,7 +63,26 @@ public class HttpTest {
             @Override
             public Response onCompleted(Response response) throws Exception {
                 // Do something with the Response
-                System.out.println(response.getStatusCode());
+                System.out.println("Response Code: " + response.getStatusCode());
+                return response;
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                // Something wrong happened.
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        final AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+        asyncHttpClient.prepareGet("http://www.ning.com/").execute(new AsyncCompletionHandler<Response>() {
+
+            @Override
+            public Response onCompleted(Response response) throws Exception {
+                asyncHttpClient.closeAsynchronously();
+                // Do something with the Response
+                System.out.println("Response Code: " + response.getStatusCode());
                 return response;
             }
 

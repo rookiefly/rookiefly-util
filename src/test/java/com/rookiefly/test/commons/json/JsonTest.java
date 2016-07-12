@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import com.rookiefly.commons.json.JsonUtil;
@@ -35,4 +36,17 @@ public class JsonTest {
 		System.out.println(payMethodIconMap.get(5));
 	}
 
+	@Test
+	public void test03() {
+		String ids = "18;";
+		String[] strings = ids.split(";");
+		System.out.println(strings);
+		String[] strings1 = StringUtils.split(ids, ";");
+		System.out.println(strings1);
+		String s = ",a,b,c,,";
+		String[] strings2 = s.split(",");
+		System.out.println(strings2);
+		String[] strings3 = StringUtils.split(s, ",");
+		System.out.println(strings3);
+	}
 }

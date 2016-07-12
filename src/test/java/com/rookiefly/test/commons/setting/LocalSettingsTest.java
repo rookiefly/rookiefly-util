@@ -39,7 +39,7 @@ public class LocalSettingsTest {
 
     @Test
     public void test03(){
-        System.out.println(System.getProperty("user.name"));
+        System.out.println(System.getProperty("java.library.path"));
     }
 
 }
