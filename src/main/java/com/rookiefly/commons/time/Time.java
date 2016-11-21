@@ -287,6 +287,15 @@ public class Time {
         return h + "时" + d + "分" + s + "秒";
     }
 
+    public static String formatDuring(long mss) {
+        long days = mss / (1000 * 60 * 60 * 24);
+        long hours = (mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+        long minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
+        long seconds = (mss % (1000 * 60)) / 1000;
+        return days + "日" + hours + "小时" + minutes + "分"
+                + seconds + "秒";
+    }
+
     public static void main(String[] args) {
         Time time = new Time();
         time.set(SECOND, 80);
