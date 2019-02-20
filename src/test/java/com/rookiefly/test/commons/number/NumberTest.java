@@ -1,5 +1,6 @@
 package com.rookiefly.test.commons.number;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -109,5 +110,11 @@ public class NumberTest {
         Constant c = new Constant();
         System.out.println(c.size);;
         System.out.println(c.size);;
+    }
+
+    @Test
+    public void testRandomStr(){
+        System.out.println(RandomStringUtils.random(10, true, true));
+
     }
 }
