@@ -9,17 +9,19 @@ import java.util.Map;
 public class AlgorithmUtil {
 
     public static void main(String[] args) {
-        System.out.println(getLCSString("acbcbcef", "abcbced"));
-        System.out.println(getLengthOfLongestSubstring("abcabcbb"));
+        System.out.println(LCS_length("acbcbcef", "abcbced"));
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(longestCommonPrefix(new String[]{"leets", "leetcode", "leet", "leets"}));
     }
 
     /**
      * 最长公共子字符串
+     * https://blog.csdn.net/u010397369/article/details/38979077
      * @param s1
      * @param s2
      * @return
      */
-    public static String getLCSString(String s1, String s2) {
+    public static String LCS_length(String s1, String s2) {
         char[] s1Array = s1.toCharArray();
         char[] s2Array = s2.toCharArray();
         int length = 0;
@@ -48,9 +50,10 @@ public class AlgorithmUtil {
 
     /**
      * 无重复字符的最长子串
+     *
      * @return
      */
-    public static String getLengthOfLongestSubstring(String s){
+    public static String lengthOfLongestSubstring(String s) {
         if (s.length() == 0 || s.length() == 1) {
             return s;
         }
@@ -71,5 +74,26 @@ public class AlgorithmUtil {
             }
         }
         return s.substring(pos + 1 - length, pos + 1);
+    }
+
+    /**
+     * 数据最长公共前缀
+     * https://blog.csdn.net/biezhihua/article/details/79859576
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        for (int i = 0; i < strs[0].length(); i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].length() == i || strs[j].charAt(i) != c) {
+                    return strs[0].substring(0, i);
+                }
+            }
+        }
+        return strs[0];
     }
 }
