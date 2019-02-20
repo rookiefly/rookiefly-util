@@ -1,5 +1,6 @@
 package com.rookiefly.commons.algorithm;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,11 @@ public class AlgorithmUtil {
         System.out.println(LCS_length("acbcbcef", "abcbced"));
         System.out.println(lengthOfLongestSubstring("abcabcbb"));
         System.out.println(longestCommonPrefix(new String[]{"leets", "leetcode", "leet", "leets"}));
+        int[] arr = {5, 4, 3, 6, 7, 4, 9};
+        quickSort(arr);
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
     }
 
     /**
@@ -115,7 +121,7 @@ public class AlgorithmUtil {
         int pivot = arr[low];     //枢轴记录
         while (low < high) {
             while (low < high && arr[high] >= pivot) --high;
-            arr[low] = arr[high];             //交换比枢轴小的记录到左端
+            arr[low] = arr[high];             //交换比枢轴大的记录到左端
             while (low < high && arr[low] <= pivot) ++low;
             arr[high] = arr[low];           //交换比枢轴小的记录到右端
         }
@@ -123,5 +129,23 @@ public class AlgorithmUtil {
         arr[low] = pivot;
         //返回的是枢轴的位置
         return low;
+    }
+
+    public boolean checkInclusion(String s1, String s2) {
+        int l1 = s1.length();
+        int l2 = s2.length();
+        int[] c1 = new int[26];
+        int[] c2 = new int[26];
+        for (char c : s1.toCharArray())
+            c1[c - 'a']++;
+
+        for (int i = 0; i < l2; i++) {
+            if (i >= l1)
+                --c2[s2.charAt(i - l1) - 'a'];//先把坐标查过的
+            c2[s2.charAt(i) - 'a']++;
+            if (Arrays.equals(c1, c2))
+                return true;
+        }
+        return false;
     }
 }
