@@ -17,6 +17,7 @@ public class AlgorithmUtil {
     /**
      * 最长公共子字符串
      * https://blog.csdn.net/u010397369/article/details/38979077
+     *
      * @param s1
      * @param s2
      * @return
@@ -79,6 +80,7 @@ public class AlgorithmUtil {
     /**
      * 数据最长公共前缀
      * https://blog.csdn.net/biezhihua/article/details/79859576
+     *
      * @param strs
      * @return
      */
@@ -95,5 +97,31 @@ public class AlgorithmUtil {
             }
         }
         return strs[0];
+    }
+
+    public static void quickSort(int[] arr) {
+        qsort(arr, 0, arr.length - 1);
+    }
+
+    private static void qsort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pivot = partition(arr, low, high);        //将数组分为两部分
+            qsort(arr, low, pivot - 1);                   //递归排序左子数组
+            qsort(arr, pivot + 1, high);                  //递归排序右子数组
+        }
+    }
+
+    private static int partition(int[] arr, int low, int high) {
+        int pivot = arr[low];     //枢轴记录
+        while (low < high) {
+            while (low < high && arr[high] >= pivot) --high;
+            arr[low] = arr[high];             //交换比枢轴小的记录到左端
+            while (low < high && arr[low] <= pivot) ++low;
+            arr[high] = arr[low];           //交换比枢轴小的记录到右端
+        }
+        //扫描完成，枢轴到位
+        arr[low] = pivot;
+        //返回的是枢轴的位置
+        return low;
     }
 }
