@@ -1,7 +1,9 @@
 package com.rookiefly.commons.algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -131,21 +133,54 @@ public class AlgorithmUtil {
         return low;
     }
 
-    public boolean checkInclusion(String s1, String s2) {
-        int l1 = s1.length();
-        int l2 = s2.length();
-        int[] c1 = new int[26];
-        int[] c2 = new int[26];
-        for (char c : s1.toCharArray())
-            c1[c - 'a']++;
-
-        for (int i = 0; i < l2; i++) {
-            if (i >= l1)
-                --c2[s2.charAt(i - l1) - 'a'];//先把坐标查过的
-            c2[s2.charAt(i) - 'a']++;
-            if (Arrays.equals(c1, c2))
-                return true;
+    public static boolean checkInclusion(String s1, String s2) {
+        if (s1 == null || s2 == null || s1.length() > s2.length()) {
+            return false;
         }
-        return false;
+        int[] count1 = new int[26]; // s1每个字符出现的次数
+        int[] count2 = new int[26]; // s2每个字符出现的次数
+        // 1. 进行统计
+        for (int i = 0; i < s1.length(); i++) {
+            count1[s1.charAt(i) - 'a']++;
+            count2[s2.charAt(i) - 'a']++;
+        }
+        // 2. 滑动窗口，滑块长度始终为 s1.length()
+        for (int i = s1.length(); i < s2.length(); i++) {
+            if (isSame(count1, count2)) {
+                return true;
+            }
+            count2[s2.charAt(i - s1.length()) - 'a']--; // 去掉滑块当前的首个字符
+            count2[s2.charAt(i) - 'a']++; // 添加最新的字符到滑块中
+        }
+        return isSame(count1, count2);
+    }
+
+    // 有且仅当 count1 中所有值都等于 count2 中对应值时满足条件
+    public static boolean isSame(int[] count1, int[] count2) {
+        for (int i = 0; i < count1.length; i++) {
+            if (count1[i] != count2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<String> restoreIpAddresses(String s) {
+        List<String> res = new ArrayList<String>();
+        helper(s, 0, "", res);
+        return res;
+    }
+
+    public void helper(String s, int n, String out, List<String> res) {
+        if (n == 4) {
+            if (s.isEmpty()) res.add(out);
+            return;
+        }
+        for (int k = 1; k < 4; ++k) {
+            if (s.length() < k) break;
+            int val = Integer.parseInt(s.substring(0, k));
+            if (val > 255 || k != String.valueOf(val).length()) continue;
+            helper(s.substring(k), n + 1, out + s.substring(0, k) + (n == 3 ? "" : "."), res);
+        }
     }
 }
