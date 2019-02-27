@@ -45,6 +45,10 @@ public class AlgorithmUtil {
         } else {
             System.out.println("不是黑名单");
         }
+
+        System.out.println(threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
+        System.out.println(reverseInt(453));
+        System.out.println(isPalindrome(-121));
     }
 
     /**
@@ -416,5 +420,61 @@ public class AlgorithmUtil {
 
         //将网段ip和验证ip分别和子网号进行&运算之后，得到的是网络号，如果相同，说明是同一个网段的
         return (networkIp & mask) == (ip & mask);
+    }
+
+    public static int threeSumClosest(int[] nums, int target) {
+        if (nums.length == 2) {
+            return nums[0] + nums[1];
+        }
+        int sum = nums[0] + nums[1] + nums[2];
+        int n = nums.length;
+        for (int i = 0; i < n - 2; i++) {
+            int left = i + 1;
+            int right = n - 1;
+            while (left < right) {
+                int tempSum = nums[i] + nums[left] + nums[right];
+                if (Math.abs(target - tempSum) < Math.abs(target - sum)) {
+                    sum = tempSum;
+                    if (sum == target) {
+                        return sum;
+                    }
+                } else if (tempSum > target) {
+                    right--;
+                } else {
+                    left++;
+                }
+
+            }
+
+        }
+        return sum;
+    }
+
+    public static int reverseInt(int x) {
+        int num = 0;
+        while (x != 0) {
+            num = num * 10 + (x % 10);
+            x = x / 10;
+        }
+
+        if (x < Integer.MIN_VALUE || x > Integer.MAX_VALUE) {
+            return 0;
+        }
+
+        return num;
+    }
+
+    public static boolean isPalindrome(int x) {
+        if (x == 0)
+            return true;
+        if (x < 0)
+            return false;
+        int rev = 0;
+        int temp = x;
+        while (temp != 0) {
+            rev = rev * 10 + temp % 10;
+            temp = temp / 10;
+        }
+        return rev == x;
     }
 }

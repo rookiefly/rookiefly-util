@@ -11,7 +11,6 @@ public class LRUCache {
         cache.put(2, 2);
         System.out.println(cache.get(1));       // 返回  1
         cache.put(3, 3);    // 该操作会使得密钥 2 作废
-        System.out.println(cache.get(1));       // 返回 -1 (未找到)
         System.out.println(cache.get(2));       // 返回 -1 (未找到)
         cache.put(4, 4);    // 该操作会使得密钥 1 作废
         System.out.println(cache.get(1));       // 返回 -1 (未找到)
@@ -24,7 +23,7 @@ public class LRUCache {
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        cache = new LinkedHashMap<Integer, Integer>() {
+        cache = new LinkedHashMap<Integer, Integer>(16,0.75f,true) {
             @Override
             protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
                 return size() > LRUCache.this.capacity;
