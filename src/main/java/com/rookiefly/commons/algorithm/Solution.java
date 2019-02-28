@@ -63,6 +63,8 @@ public class Solution {
 
         printCommonPart(head1, head2);
         System.out.println(findMid(head2));
+        printListNode(removeNthFromEnd(head1, 2));
+        printListNode(head1);
         printListNode(addTwoLists(head1, head2));
         printListNode(mergeTwoLists(head1, head2));
         //printListNode(mergeTwoLists2(head1, head2));
@@ -695,5 +697,23 @@ public class Solution {
             n1 = n2;
         }
         return res;
+    }
+
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        while (fast.next != null) {
+            if (n <= 0) {
+                slow = slow.next;
+            }
+            n--;
+            fast = fast.next;
+        }
+        if (slow.next != null) {
+            slow.next = slow.next.next;
+        }
+        return dummy.next;
     }
 }
