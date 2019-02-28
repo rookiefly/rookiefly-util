@@ -7,11 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * @create: 2019-02-20
  **/
-public class AlgorithmUtil {
+public class Solution {
 
     public static void main(String[] args) {
         System.out.println(LCS_length("acbcbcef", "abcbced"));
@@ -49,6 +50,58 @@ public class AlgorithmUtil {
         System.out.println(threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
         System.out.println(reverseInt(453));
         System.out.println(isPalindrome(-121));
+        System.out.println(longestPalindrome("abaaba"));
+
+        ListNode head1 = new ListNode(1);
+        head1.next = new ListNode(3);
+        head1.next.next = new ListNode(5);
+
+        ListNode head2 = new ListNode(2);
+        head2.next = new ListNode(5);
+        head2.next.next = new ListNode(6);
+        head2.next.next.next = new ListNode(7);
+
+        printCommonPart(head1, head2);
+        System.out.println(findMid(head2));
+        printListNode(addTwoLists(head1, head2));
+        printListNode(mergeTwoLists(head1, head2));
+        //printListNode(mergeTwoLists2(head1, head2));
+        System.out.println(isPalindrome1(head1));
+    }
+
+    public static class ListNode {
+        public int val;
+        public ListNode next;
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+
+        public int val() {
+            return this.val;
+        }
+    }
+
+    public static void printListNode(ListNode node) {
+        System.out.print("Linked List: ");
+        while (node != null) {
+            System.out.print(node.val + " ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+
+    public static class TreeNode {
+
+        private int value;
+
+        private TreeNode left;
+
+        private TreeNode right;
+
+        public TreeNode(int value) {
+            this.value = value;
+        }
     }
 
     /**
@@ -349,20 +402,7 @@ public class AlgorithmUtil {
         return ans;
     }
 
-    public class ListNode {
-        public int val;
-        public ListNode next;
-
-        public ListNode(int val) {
-            this.val = val;
-        }
-
-        public int val() {
-            return this.val;
-        }
-    }
-
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public static ListNode addTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null)
             return l2;
         if (l2 == null)
@@ -464,6 +504,12 @@ public class AlgorithmUtil {
         return num;
     }
 
+    /**
+     * 回文整数判断
+     *
+     * @param x
+     * @return
+     */
     public static boolean isPalindrome(int x) {
         if (x == 0)
             return true;
@@ -476,5 +522,178 @@ public class AlgorithmUtil {
             temp = temp / 10;
         }
         return rev == x;
+    }
+
+    /**
+     * 最长回文字符串
+     *
+     * @param s
+     * @return
+     */
+    public static int longestPalindrome(String s) {
+        int length = s.length();
+        if (length == 1) {
+            return 1;
+        }
+        boolean[][] pal = new boolean[length][length];
+        int maxLength = 0;
+        for (int i = 0; i < length; i++) {
+            int j = i;
+            while (j >= 0) {
+                if (s.charAt(i) == s.charAt(j) && (i - j < 2 || pal[j + 1][i - 1])) {
+                    pal[j][i] = true;
+                    maxLength = Math.max(maxLength, i - j + 1);
+                }
+                j--;
+            }
+        }
+        return maxLength;
+    }
+
+    public static int removeElement(int[] a, int t) {
+
+        int i = 0;
+        for (int j = 0; j < a.length; j++) {
+            if (a[j] != t) {
+                a[i++] = a[j];
+            }
+        }
+        return i;
+    }
+
+    /**
+     * 合并有序链表，非递归
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode newHead = new ListNode(0);
+        ListNode l3 = newHead;
+        while (l1 != null && l2 != null) {
+            if (l1.val > l2.val) {
+                l3.next = l2;
+                l2 = l2.next;
+            } else {
+                l3.next = l1;
+                l1 = l1.next;
+            }
+            l3 = l3.next;
+        }
+
+        if (l1 != null) {
+            l3.next = l1;
+        } else if (l2 != null) {
+            l3.next = l2;
+        }
+        return newHead.next;
+    }
+
+    /**
+     * 合并有序链表，递归
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public static ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
+
+        if (l1 == null)
+            return l2;
+        if (l2 == null)
+            return l1;
+        if (l1.val < l2.val) {
+            l1.next = mergeTwoLists2(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists2(l1, l2.next);
+            return l2;
+        }
+    }
+
+    public static int findMid(ListNode l1) {
+        ListNode fast = l1;
+        ListNode slow = l1;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow.val;
+    }
+
+    public static void printCommonPart(ListNode head1, ListNode head2) {
+        System.out.print("Common Part: ");
+        while (head1 != null && head2 != null) {
+            if (head1.val < head2.val) {
+                head1 = head1.next;
+            } else if (head1.val > head2.val) {
+                head2 = head2.next;
+            } else {
+                System.out.print(head1.val + " ");
+                head1 = head1.next;
+                head2 = head2.next;
+            }
+        }
+        System.out.println();
+    }
+
+    public static boolean isPalindrome1(ListNode node) {
+        if (node == null)
+            return false;
+        Stack<ListNode> stack = new Stack();
+        ListNode cur = node;
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.next;
+        }
+        while (node != null) {
+            if (node.val != stack.pop().val) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // need O(1) extra space
+    public static boolean isPalindrome3(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode n1 = head;
+        ListNode n2 = head;
+        while (n2.next != null && n2.next.next != null) { // find mid node
+            n1 = n1.next; // n1 -> mid
+            n2 = n2.next.next; // n2 -> end
+        }
+        n2 = n1.next; // n2 -> right part first node
+        n1.next = null; // mid.next -> null
+        ListNode n3 = null;
+        while (n2 != null) { // right part convert
+            n3 = n2.next; // n3 -> save next node 操作前先保存下一个节点
+            n2.next = n1; // next of right node convert 反转指向
+            n1 = n2; // n1 move 保存当前节点，作为后一个的前节点
+            n2 = n3; // n2 move 向前推进
+        }
+        n3 = n1; // n3 -> save last node
+        n2 = head;// n2 -> left first node
+        boolean res = true;
+        while (n1 != null && n2 != null) { // check palindrome
+            if (n1.val != n2.val) {
+                res = false;
+                break;
+            }
+            n1 = n1.next; // left to mid
+            n2 = n2.next; // right to mid
+        }
+        n1 = n3.next;
+        n3.next = null;
+        while (n1 != null) { // recover list
+            n2 = n1.next;
+            n1.next = n3;
+            n3 = n1;
+            n1 = n2;
+        }
+        return res;
     }
 }
