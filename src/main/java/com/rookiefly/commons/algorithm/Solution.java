@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -20,7 +22,8 @@ public class Solution {
         System.out.println(lengthOfLongestSubstring2("abcabcbb"));
         System.out.println(longestCommonPrefix(new String[]{"leets", "leetcode", "leet", "leets"}));
         int[] arr = {5, 4, 3, 6, 7, 4, 9};
-        quickSort(arr);
+        //quickSort(arr);
+        insertSort(arr);
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
@@ -69,6 +72,23 @@ public class Solution {
         printListNode(mergeTwoLists(head1, head2));
         //printListNode(mergeTwoLists2(head1, head2));
         System.out.println(isPalindrome1(head1));
+        System.out.println(new int[3][4].length);
+        System.out.println(fibonacci2(9));
+        int[][] m = {
+                {1, 0, 1, 0, 1},
+                {0, 1, 0, 0, 0},
+                {1, 0, 1, 0, 0},
+                {0, 0, 0, 1, 0},
+                {1, 0, 0, 0, 1}};
+        int[][] m2 = {
+                {1, 1, 0},
+                {1, 1, 0},
+                {0, 0, 1}};
+        int[][] m3 = {
+                {1, 1, 0},
+                {1, 1, 1},
+                {0, 1, 1}};
+        System.out.println(findCircleNum2(m2));
     }
 
     public static class ListNode {
@@ -104,6 +124,7 @@ public class Solution {
         public TreeNode(int value) {
             this.value = value;
         }
+
     }
 
     /**
@@ -296,6 +317,12 @@ public class Solution {
         }
     }
 
+    /**
+     * 移除重复元素。利用hashmap
+     *
+     * @param numbersWithDuplicates
+     * @return
+     */
     public static int[] removeDuplicates(int[] numbersWithDuplicates) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < numbersWithDuplicates.length; i++) {
@@ -309,6 +336,12 @@ public class Solution {
         return numbersWithDuplicates;
     }
 
+    /**
+     * 数组移除重复元素，利用排序
+     *
+     * @param numbersWithDuplicates
+     * @return
+     */
     public static int[] removeDuplicates2(int[] numbersWithDuplicates) {
         Arrays.sort(numbersWithDuplicates);
 
@@ -379,6 +412,12 @@ public class Solution {
         return result;
     }
 
+    /**
+     * 牛顿法求解开方根
+     *
+     * @param x
+     * @return
+     */
     public static int sqrt(int x) {
         int r = x;
         while (r * r > x) {
@@ -404,6 +443,13 @@ public class Solution {
         return ans;
     }
 
+    /**
+     * 链表相加
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
     public static ListNode addTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null)
             return l2;
@@ -464,6 +510,13 @@ public class Solution {
         return (networkIp & mask) == (ip & mask);
     }
 
+    /**
+     * 三数之和
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
     public static int threeSumClosest(int[] nums, int target) {
         if (nums.length == 2) {
             return nums[0] + nums[1];
@@ -492,6 +545,12 @@ public class Solution {
         return sum;
     }
 
+    /**
+     * 整数反转
+     *
+     * @param x
+     * @return
+     */
     public static int reverseInt(int x) {
         int num = 0;
         while (x != 0) {
@@ -552,6 +611,13 @@ public class Solution {
         return maxLength;
     }
 
+    /**
+     * 原地移除数组指定元素
+     *
+     * @param a
+     * @param t
+     * @return
+     */
     public static int removeElement(int[] a, int t) {
 
         int i = 0;
@@ -624,6 +690,12 @@ public class Solution {
         return slow.val;
     }
 
+    /**
+     * 寻找链表公共元素
+     *
+     * @param head1
+     * @param head2
+     */
     public static void printCommonPart(ListNode head1, ListNode head2) {
         System.out.print("Common Part: ");
         while (head1 != null && head2 != null) {
@@ -640,6 +712,12 @@ public class Solution {
         System.out.println();
     }
 
+    /**
+     * 回文链表
+     *
+     * @param node
+     * @return
+     */
     public static boolean isPalindrome1(ListNode node) {
         if (node == null)
             return false;
@@ -699,11 +777,16 @@ public class Solution {
         return res;
     }
 
+    /**
+     * 移除链表倒数第N个元素
+     *
+     * @param head
+     * @param n
+     * @return
+     */
     public static ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
-        ListNode fast = dummy;
-        ListNode slow = dummy;
+        ListNode fast = head;
+        ListNode slow = head;
         while (fast.next != null) {
             if (n <= 0) {
                 slow = slow.next;
@@ -714,6 +797,162 @@ public class Solution {
         if (slow.next != null) {
             slow.next = slow.next.next;
         }
-        return dummy.next;
+        return head;
     }
+
+    /**
+     * 斐波那契数列，递归实现
+     *
+     * @param n
+     * @return
+     */
+    public static int fibonacci(int n) {
+        if (n == 1 || n == 2) {
+            return 1;
+        }
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    public static int fibonacci2(int n) {
+        if (n < 3) {
+            return 1;
+        }
+        int num1 = 1;
+        int num2 = 1;
+        for (int i = 3; i < n; i++) {
+            num2 = num2 + num1;
+            num1 = num2 - num1;
+        }
+        return num1 + num2;
+    }
+
+    /**
+     * 朋友圈个数
+     *
+     * @param m
+     * @return
+     */
+    public static int findCircleNum(int[][] m) {
+        if (m == null) {
+            return 0;
+        }
+        int res = 0;
+        int[] visited = new int[m.length];
+        for (int i = 0; i < m.length; i++) {
+            if (visited[i] == 0) {
+                res++;
+                dfs(m, visited, i);
+            }
+        }
+        return res;
+    }
+
+    private static void dfs(int[][] m, int[] visited, int i) {
+        visited[i] = 1;
+        for (int j = 0; j < m.length; j++) {
+            if (m[i][j] == 1 && visited[j] == 0) {
+                dfs(m, visited, j);
+            }
+        }
+    }
+
+    private static int findCircleNum2(int[][] m) {
+        if (m == null) {
+            return 0;
+        }
+        int res = 0;
+        int[] visited = new int[m.length];
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < m.length; i++) {
+            if (visited[i] == 0) {
+                res++;
+                queue.offer(i);
+                visited[i] = 1;
+                while (!queue.isEmpty()) {
+                    int node = queue.poll();
+                    for (int j = 0; j < m.length; j++) {
+                        if (m[node][j] == 1 && visited[j] == 0) {
+                            queue.offer(j);
+                            visited[j] = 1;
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 冒泡排序
+     *
+     * @param a
+     */
+    public static void sort(int[] a) {
+        for (int i = 0; i < a.length - 1; i++) {
+            for (int j = 0; j < a.length - i - 1; j++) {
+                if (a[j] > a[j + 1]) {
+                    int temp = a[j + 1];
+                    a[j + 1] = a[j];
+                    a[j] = temp;
+                }
+            }
+        }
+    }
+
+    /**
+     * 选择排序
+     *
+     * @param a
+     */
+    public static void sort2(int[] a) {
+        for (int i = 0; i < a.length - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < a.length - 1; j++) {
+                if (a[minIndex] > a[j]) {
+                    minIndex = j;
+                }
+            }
+            int temp = a[i];
+            a[i] = a[minIndex];
+            a[minIndex] = temp;
+        }
+    }
+
+    /**
+     * 插入排序
+     *
+     * @param a
+     */
+    public static void insertSort(int[] a) {
+        int pre = 0;
+        int current;
+        for (int i = 1; i < a.length; i++) {
+            pre = i - 1;
+            current = a[i];
+            while (pre >= 0 && a[pre] > current) {
+                a[pre + 1] = a[pre];
+                pre--;
+            }
+            a[pre + 1] = current;
+        }
+    }
+
+    /**
+     * 归并排序
+     *
+     * @param a
+     */
+    public static void sort4(int[] a) {
+
+    }
+
+    /**
+     * 快速排序
+     *
+     * @param a
+     */
+    public static void sort5(int[] a) {
+
+    }
+
 }
