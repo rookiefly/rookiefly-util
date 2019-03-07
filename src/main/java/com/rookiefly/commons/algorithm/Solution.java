@@ -887,7 +887,7 @@ public class Solution {
      *
      * @param a
      */
-    public static void sort(int[] a) {
+    public static void bubbleSort(int[] a) {
         for (int i = 0; i < a.length - 1; i++) {
             for (int j = 0; j < a.length - i - 1; j++) {
                 if (a[j] > a[j + 1]) {
@@ -904,7 +904,7 @@ public class Solution {
      *
      * @param a
      */
-    public static void sort2(int[] a) {
+    public static void selectSort(int[] a) {
         for (int i = 0; i < a.length - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < a.length - 1; j++) {
@@ -942,7 +942,7 @@ public class Solution {
      *
      * @param a
      */
-    public static void sort4(int[] a) {
+    public static void mergeSort(int[] a) {
 
     }
 
