@@ -1,6 +1,5 @@
 package com.rookiefly.test.commons.redis;
 
-import com.rookiefly.commons.redis.RedisService;
 import com.rookiefly.commons.redis.RedisServiceImpl;
 import org.junit.Test;
 import redis.clients.jedis.HostAndPort;
@@ -27,6 +26,8 @@ public class RedisTest {
         redisService.setRedisAddr("127.0.0.1:19000");
         redisService.init();
         redisService.set("test", "hello");
+        redisService.set("test2", "hello");
+        redisService.set("test3", "hello");
         System.out.println(redisService.get("test"));
         System.out.println(redisService.get("test"));
         System.out.println(redisService.get("test1"));
