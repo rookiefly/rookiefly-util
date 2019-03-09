@@ -1,18 +1,16 @@
 package com.rookiefly.commons.ip;
 
+import com.rookiefly.commons.json.JsonUtil;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
-
-import com.rookiefly.commons.json.JsonUtil;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class IPUtils {
 
