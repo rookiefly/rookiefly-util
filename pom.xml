@@ -284,6 +284,11 @@
 			<artifactId>sentinel-parameter-flow-control</artifactId>
 			<version>1.4.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.jsonzou</groupId>
+			<artifactId>jmockdata</artifactId>
+			<version>4.1.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

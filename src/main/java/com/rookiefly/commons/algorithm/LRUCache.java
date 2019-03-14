@@ -3,10 +3,17 @@ package com.rookiefly.commons.algorithm;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
 public class LRUCache {
 
     public static void main(String[] args) {
-        LRUCache cache = new LRUCache( 2 /* 缓存容量 */ );
+        LRUCache cache = new LRUCache(2 /* 缓存容量 */);
         cache.put(1, 1);
         cache.put(2, 2);
         System.out.println(cache.get(1));       // 返回  1
@@ -17,13 +24,14 @@ public class LRUCache {
         System.out.println(cache.get(3));       // 返回  3
         System.out.println(cache.get(4));       // 返回  4
     }
+
     private LinkedHashMap<Integer, Integer> cache;
 
     private int capacity;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        cache = new LinkedHashMap<Integer, Integer>(16,0.75f,true) {
+        cache = new LinkedHashMap<Integer, Integer>(16, 0.75f, true) {
             @Override
             protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
                 return size() > LRUCache.this.capacity;
@@ -43,10 +51,3 @@ public class LRUCache {
         cache.put(key, value);
     }
 }
-
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */

@@ -1,24 +1,25 @@
 package com.rookiefly.commons.agent;
 
-import javassist.*;
+import javassist.CannotCompileException;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.NotFoundException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
-
 import java.security.ProtectionDomain;
 
 /**
  * description: Transformer
- * author: xiaobai
- * data: 2016/8/30
  */
 public class NewTransformer implements ClassFileTransformer {
 
 
     @Override
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) {
         className = className.replace("/", ".");
         if (!className.equals("com.pnfsoftware.jeb.client.AbstractClientContext")) return null;
         try {

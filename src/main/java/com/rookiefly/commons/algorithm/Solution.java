@@ -233,6 +233,10 @@ public class Solution {
         return strs[0];
     }
 
+    /**
+     * 快速排序
+     * @param arr
+     */
     public static void quickSort(int[] arr) {
         qsort(arr, 0, arr.length - 1);
     }
@@ -713,7 +717,7 @@ public class Solution {
     }
 
     /**
-     * 回文链表
+     * 回文链表，借助栈
      *
      * @param node
      * @return
@@ -735,7 +739,12 @@ public class Solution {
         return true;
     }
 
-    // need O(1) extra space
+    /**
+     * 回文链表
+     * O(1) extra space
+     * @param head
+     * @return
+     */
     public static boolean isPalindrome3(ListNode head) {
         if (head == null || head.next == null) {
             return true;
@@ -827,7 +836,7 @@ public class Solution {
     }
 
     /**
-     * 朋友圈个数
+     * 朋友圈个数，深度优先搜索
      *
      * @param m
      * @return
@@ -856,6 +865,11 @@ public class Solution {
         }
     }
 
+    /**
+     * 朋友圈个数，广度优先搜素
+     * @param m
+     * @return
+     */
     private static int findCircleNum2(int[][] m) {
         if (m == null) {
             return 0;
@@ -951,7 +965,7 @@ public class Solution {
      *
      * @param a
      */
-    public static void sort5(int[] a) {
+    public static void quickSort2(int[] a) {
 
     }
 
