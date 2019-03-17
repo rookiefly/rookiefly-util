@@ -35,9 +35,6 @@ import javax.imageio.ImageIO;
  * <p>
  * 验证码工具类
  * </p>
- * 
- * @author hubin
- * @Date 2015-2-21
  */
 public class VerifyCodeUtils {
 
