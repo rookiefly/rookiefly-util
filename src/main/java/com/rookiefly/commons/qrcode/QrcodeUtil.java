@@ -1,8 +1,12 @@
 package com.rookiefly.commons.qrcode;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import com.swetake.util.Qrcode;
+import jp.sourceforge.qrcode.QRCodeDecoder;
+import jp.sourceforge.qrcode.exception.DecodingFailedException;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,19 +18,11 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
-
-import jp.sourceforge.qrcode.QRCodeDecoder;
-import jp.sourceforge.qrcode.exception.DecodingFailedException;
-
-import com.swetake.util.Qrcode;
-
 public class QrcodeUtil {
-    private static final int    SIZE       = 12;
-    private static final String IMG_TYPE   = "png";
-    private static final String LOGO_IMG   = "http://dl.kuaidadi.com/resources/img/logo.png";
-    private static QrcodeUtil   qrcodeUtil = new QrcodeUtil();
+    private static final int SIZE = 12;
+    private static final String IMG_TYPE = "png";
+    private static final String LOGO_IMG = "https://avatars1.githubusercontent.com/u/3352212?s=460&v=4";
+    private static QrcodeUtil qrcodeUtil = new QrcodeUtil();
 
     public static QrcodeUtil getInstance() {
         return qrcodeUtil;
@@ -34,11 +30,9 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码(QRCode)图片
-     * 
-     * @param content
-     *            存储内容
-     * @param imgPath
-     *            图片路径
+     *
+     * @param content 存储内容
+     * @param imgPath 图片路径
      */
     public void encodeQRCode(String content, String imgPath) {
         this.encodeQRCode(content, imgPath, IMG_TYPE, SIZE);
@@ -46,11 +40,9 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码(QRCode)图片
-     * 
-     * @param content
-     *            存储内容
-     * @param output
-     *            输出流
+     *
+     * @param content 存储内容
+     * @param output  输出流
      */
     public void encodeQRCode(String content, OutputStream output) {
         this.encodeQRCode(content, output, IMG_TYPE, SIZE);
@@ -58,13 +50,10 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码(QRCode)图片
-     * 
-     * @param content
-     *            存储内容
-     * @param imgPath
-     *            图片路径
-     * @param imgType
-     *            图片类型
+     *
+     * @param content 存储内容
+     * @param imgPath 图片路径
+     * @param imgType 图片类型
      */
     public void encodeQRCode(String content, String imgPath, String imgType) {
         this.encodeQRCode(content, imgPath, imgType, SIZE);
@@ -72,13 +61,10 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码(QRCode)图片
-     * 
-     * @param content
-     *            存储内容
-     * @param output
-     *            输出流
-     * @param imgType
-     *            图片类型
+     *
+     * @param content 存储内容
+     * @param output  输出流
+     * @param imgType 图片类型
      */
     public void encodeQRCode(String content, OutputStream output, String imgType) {
         this.encodeQRCode(content, output, imgType, SIZE);
@@ -86,15 +72,11 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码(QRCode)图片
-     * 
-     * @param content
-     *            存储内容
-     * @param imgPath
-     *            图片路径
-     * @param imgType
-     *            图片类型
-     * @param size
-     *            二维码尺寸
+     *
+     * @param content 存储内容
+     * @param imgPath 图片路径
+     * @param imgType 图片类型
+     * @param size    二维码尺寸
      */
     public void encodeQRCode(String content, String imgPath, String imgType, int size) {
         try {
@@ -122,7 +104,7 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码图片流
-     * 
+     *
      * @param content
      * @param imgType
      * @param size
@@ -134,7 +116,7 @@ public class QrcodeUtil {
 
     /**
      * 生成包含logo的二维码
-     * 
+     *
      * @param content
      * @param imgType
      * @param size
@@ -161,7 +143,7 @@ public class QrcodeUtil {
 
     /**
      * 关闭输入输出流
-     * 
+     *
      * @param o
      */
     private void close(Object o) {
@@ -179,15 +161,11 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码(QRCode)图片
-     * 
-     * @param content
-     *            存储内容
-     * @param output
-     *            输出流
-     * @param imgType
-     *            图片类型
-     * @param size
-     *            二维码尺寸
+     *
+     * @param content 存储内容
+     * @param output  输出流
+     * @param imgType 图片类型
+     * @param size    二维码尺寸
      */
     public void encodeQRCode(String content, OutputStream output, String imgType, int size) {
         try {
@@ -205,18 +183,14 @@ public class QrcodeUtil {
 
     /**
      * 生成二维码(QRCode)图片的公共方法
-     * 
-     * @param content
-     *            存储内容
-     * @param imgType
-     *            图片类型
-     * @param size
-     *            二维码尺寸
+     *
+     * @param content 存储内容
+     * @param imgType 图片类型
+     * @param size    二维码尺寸
      * @return
      */
     private BufferedImage generateQRCodeImage(String content, String imgType, int size, LogoImage logoImage) {
         BufferedImage bufImg = null;
-        Graphics2D gs = null;
         try {
             Qrcode qrcodeHandler = new Qrcode();
             // 设置二维码排错率，可选L(7%)、M(15%)、Q(25%)、H(30%)，排错率越高可存储的信息越少，但对二维码清晰度的要求越小
@@ -229,7 +203,7 @@ public class QrcodeUtil {
             // 图片尺寸
             int imgSize = 67 + 12 * (size - 1);
             bufImg = new BufferedImage(imgSize, imgSize, BufferedImage.TYPE_INT_RGB);
-            gs = bufImg.createGraphics();
+            Graphics2D gs = bufImg.createGraphics();
             // 设置背景颜色
             gs.setBackground(Color.WHITE);
             gs.clearRect(0, 0, imgSize, imgSize);
@@ -257,7 +231,7 @@ public class QrcodeUtil {
                 Image img = ImageIO.read(url);
                 //Image img = ImageIO.read(new File(logoImg));//实例化一个Image对象。
                 gs.drawImage(img, imgSize / 2 - logoImage.getWidth() / 2, imgSize / 2 - logoImage.getHeight() / 2,
-                    logoImage.getWidth(), logoImage.getHeight(), null);//将logo加到二维码中
+                        logoImage.getWidth(), logoImage.getHeight(), null);//将logo加到二维码中
             }
             gs.dispose();
             bufImg.flush();
@@ -269,9 +243,8 @@ public class QrcodeUtil {
 
     /**
      * 解析二维码（QRCode）
-     * 
-     * @param imgPath
-     *            图片路径
+     *
+     * @param imgPath 图片路径
      * @return
      */
     public String decodeQRCode(String imgPath) {
@@ -293,16 +266,14 @@ public class QrcodeUtil {
 
     /**
      * 解析二维码（QRCode）
-     * 
-     * @param input
-     *            输入流
+     *
+     * @param input 输入流
      * @return
      */
     public String decodeQRCode(InputStream input) {
-        BufferedImage bufImg = null;
         String content = null;
         try {
-            bufImg = ImageIO.read(input);
+            BufferedImage bufImg = ImageIO.read(input);
             QRCodeDecoder decoder = new QRCodeDecoder();
             content = new String(decoder.decode(new QrcodeImage(bufImg)), Charset.defaultCharset());
         } catch (IOException e) {
@@ -317,8 +288,8 @@ public class QrcodeUtil {
 
     public static void main(String[] args) throws IOException {
         QrcodeUtil handler = new QrcodeUtil();
-        String imgPath = "E:/qrcode/demo_qrcode.png";
-         String encoderContent = "https://github.com/rookiefly";
+        String imgPath = "/Users/rookiefly/demo_qrcode.png";
+        String encoderContent = "https://github.com/rookiefly";
         String imgType = "png";
         //handler.encoderQRCode(encoderContent, imgPath);
         LogoImage li = new LogoImage();
@@ -328,7 +299,7 @@ public class QrcodeUtil {
         InputStream is = handler.encodeQRCodeHasLogo(encoderContent, imgType, 12, li);
         File file = new File(imgPath);
         OutputStream os = new FileOutputStream(file);
-        int bytesRead = 0;
+        int bytesRead;
         byte[] buffer = new byte[8192];
         while ((bytesRead = is.read(buffer, 0, 8192)) != -1) {
             os.write(buffer, 0, bytesRead);

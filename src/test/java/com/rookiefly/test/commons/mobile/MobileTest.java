@@ -12,9 +12,4 @@ public class MobileTest {
         Assert.assertTrue(MobileUtil.isRegualTel("0571-8342343"));
         Assert.assertTrue(MobileUtil.isRegualMob("13185028561"));
     }
-
-    @Test
-    public void test02() {
-        Assert.assertEquals("城市归属地","杭州",MobileUtil.getMobieZone("13185028561").getCity());
-    }
 }
