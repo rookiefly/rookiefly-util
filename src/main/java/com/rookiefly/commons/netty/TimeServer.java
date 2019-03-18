@@ -14,7 +14,7 @@ public class TimeServer {
         // 配置服务端的NIO线程组
         //用于网络事件处理
         EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             //启动NIO服务端的辅助启动类
             ServerBootstrap b = new ServerBootstrap();

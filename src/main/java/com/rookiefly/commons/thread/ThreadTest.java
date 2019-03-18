@@ -14,7 +14,7 @@ public class ThreadTest {
     /**
      * 5个线程的线程池
      */
-    protected static ExecutorService scheduler = Executors.newFixedThreadPool(5);
+    private static ExecutorService scheduler = Executors.newFixedThreadPool(5);
 
     public static CountDownLatch countDownLatch;
 
@@ -55,7 +55,13 @@ public class ThreadTest {
         }
 
         public void run() {
+            System.out.println(threadName + " start");
             //do something
+            try {
+                Thread.currentThread().sleep(8000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println(threadName + " done");
             ThreadTest.countDownLatch.countDown();
         }

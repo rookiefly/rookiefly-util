@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.rokiefly.commons</groupId>
-	<artifactId>rookie-util</artifactId>
+	<artifactId>rookiefly-util</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>rookie-util</name>
+	<name>rookiefly-util</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
