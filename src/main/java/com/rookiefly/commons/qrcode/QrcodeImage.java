@@ -1,8 +1,8 @@
 package com.rookiefly.commons.qrcode;
 
-import java.awt.image.BufferedImage;
-
 import jp.sourceforge.qrcode.data.QRCodeImage;
+
+import java.awt.image.BufferedImage;
 
 public class QrcodeImage implements QRCodeImage {
 

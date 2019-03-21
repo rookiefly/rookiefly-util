@@ -1,13 +1,12 @@
 package com.rookiefly.commons.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class WebUtils {
 
@@ -27,7 +26,7 @@ public class WebUtils {
 
     /**
      * 是否ajax请求
-     * 
+     *
      * @param request
      * @return
      */
@@ -44,6 +43,7 @@ public class WebUtils {
 
     /**
      * Returns true if the Servlet 3 APIs are detected.
+     *
      * @return
      */
     private boolean isServlet3() {

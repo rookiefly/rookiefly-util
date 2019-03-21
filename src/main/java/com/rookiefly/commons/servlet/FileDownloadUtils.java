@@ -1,5 +1,9 @@
 package com.rookiefly.commons.servlet;
 
+import org.apache.commons.io.IOUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,14 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
-
 /**
- * 
- * 
  * @author wanggaoxiang
  * @version $Id: FileDownloadUtils.java, v 0.1 2015年3月17日 下午4:24:23 wanggaoxiang<p>
  */
@@ -25,11 +22,11 @@ public class FileDownloadUtils {
 
     /**
      * 从web根目录的相对目录下载到浏览器
-     * 
+     *
      * @param request
      * @param response
      * @param fileName 下载的文件名
-     * @param baseDir 相对web根目录的目录名，默认upload
+     * @param baseDir  相对web根目录的目录名，默认upload
      * @throws Exception
      */
     public static void downloadFromWebRoot(HttpServletRequest request, HttpServletResponse response, String fileName,
@@ -44,7 +41,7 @@ public class FileDownloadUtils {
         String downLoadPath = ctxPath + "/" + newFileName;
         long fileLength = new File(downLoadPath).length();
         response.setHeader("Content-disposition", "attachment; filename="
-                                                  + new String(newFileName.getBytes("UTF-8"), "UTF-8"));
+                + new String(newFileName.getBytes("UTF-8"), "UTF-8"));
         response.setHeader("Content-Length", String.valueOf(fileLength));
         FileInputStream fis = new FileInputStream(downLoadPath);
         OutputStream out = response.getOutputStream();
@@ -54,14 +51,14 @@ public class FileDownloadUtils {
 
     /**
      * 输入流下载到浏览器
-     * 
+     *
      * @param fileStream 下载的文件输入流,下载完毕后不会关闭流
      * @param response
-     * @param fileName 下载文件时生成的文件名称
+     * @param fileName   下载文件时生成的文件名称
      * @throws Exception
      */
     public static void downloadFromStream(InputStream fileStream, HttpServletResponse response, String fileName)
-                                                                                                                throws Exception {
+            throws Exception {
         response.setContentType("application/octet-stream");
         OutputStream out = response.getOutputStream();
         long fileLength = fileStream.available();
@@ -72,7 +69,7 @@ public class FileDownloadUtils {
 
     /**
      * 根据文件服务器上文件的url路径下载文件
-     * 
+     *
      * @param response
      * @param fileName
      * @param fileUrl
@@ -98,10 +95,10 @@ public class FileDownloadUtils {
 
     /**
      * 下载文件服务器文件到本地目录
-     * 
+     *
      * @param localDir 本地目录,目录必须存在
      * @param fileName 本地文件名
-     * @param fileUrl 文件url
+     * @param fileUrl  文件url
      * @throws Exception
      */
     public static void downloadFromUrlToLocal(String localDir, String fileName, String fileUrl) throws Exception {
@@ -126,11 +123,11 @@ public class FileDownloadUtils {
 
     /**
      * 下载文件服务器文件到本地目录
-     * 
+     *
      * @param localDir 本地目录,目录必须存在
-     * @param fileUrl 文件url
-     * @throws Exception
+     * @param fileUrl  文件url
      * @return 本地文件名称
+     * @throws Exception
      */
     public static String downloadFromUrlToLocal(String localDir, String fileUrl) throws Exception {
         String fileName = extractFileNameFromUrl(fileUrl);

@@ -1,9 +1,8 @@
 package com.rookiefly.test.commons.mobile;
 
+import com.rookiefly.commons.mobile.MobileUtil;
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.rookiefly.commons.mobile.MobileUtil;
 
 public class MobileTest {
 

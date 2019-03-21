@@ -15,7 +15,7 @@ public abstract class PinYin4JUtil {
 
     /**
      * 将汉字转换为全拼
-     * 
+     *
      * @param src
      * @return String
      */
@@ -50,7 +50,7 @@ public abstract class PinYin4JUtil {
 
     /**
      * 提取每个汉字的首字母
-     * 
+     *
      * @param str
      * @return String
      */
@@ -72,7 +72,7 @@ public abstract class PinYin4JUtil {
 
     /**
      * 将字符串转换成ASCII码
-     * 
+     *
      * @param cnStr
      * @return String
      */
@@ -90,17 +90,18 @@ public abstract class PinYin4JUtil {
 
     /**
      * 把中文转成Unicode码
+     *
      * @param str
      * @return
      */
-    public static String chinaToUnicode(String str){
-        String result="";
-        for (int i = 0; i < str.length(); i++){
+    public static String chinaToUnicode(String str) {
+        String result = "";
+        for (int i = 0; i < str.length(); i++) {
             int chr1 = (char) str.charAt(i);
-            if(chr1>=19968 && chr1<=171941){//汉字范围 \u4e00-\u9fa5 (中文)
-                result+="\\u" + Integer.toHexString(chr1);
-            }else{
-                result+=str.charAt(i);
+            if (chr1 >= 19968 && chr1 <= 171941) {//汉字范围 \u4e00-\u9fa5 (中文)
+                result += "\\u" + Integer.toHexString(chr1);
+            } else {
+                result += str.charAt(i);
             }
         }
         return result;

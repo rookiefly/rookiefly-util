@@ -8,50 +8,50 @@ import java.util.List;
  * <p/>
  * 新增分页的多项属性，主要参考:http://bbs.csdn.net/topics/360010907
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class PageInfo<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     //当前页
-    private int               pageNum;
+    private int pageNum;
     //每页的数量
-    private int               pageSize;
+    private int pageSize;
     //当前页的数量
-    private int               size;
+    private int size;
     //由于startRow和endRow不常用，这里说个具体的用法
     //可以在页面中"显示startRow到endRow 共size条数据"
 
     //当前页面第一个元素在数据库中的行号
-    private int               startRow;
+    private int startRow;
     //当前页面最后一个元素在数据库中的行号
-    private int               endRow;
+    private int endRow;
     //总记录数
-    private long              total;
+    private long total;
     //总页数
-    private int               pages;
+    private int pages;
     //结果集
-    private List<T>           list;
+    private List<T> list;
 
     //第一页
-    private int               firstPage;
+    private int firstPage;
     //前一页
-    private int               prePage;
+    private int prePage;
     //下一页
-    private int               nextPage;
+    private int nextPage;
     //最后一页
-    private int               lastPage;
+    private int lastPage;
 
     //是否为第一页
-    private boolean           isFirstPage      = false;
+    private boolean isFirstPage = false;
     //是否为最后一页
-    private boolean           isLastPage       = false;
+    private boolean isLastPage = false;
     //是否有前一页
-    private boolean           hasPreviousPage  = false;
+    private boolean hasPreviousPage = false;
     //是否有下一页
-    private boolean           hasNextPage      = false;
+    private boolean hasNextPage = false;
     //导航页码数
-    private int               navigatePages;
+    private int navigatePages;
     //所有导航页号
-    private int[]             navigatepageNums;
+    private int[] navigatepageNums;
 
     /**
      * 包装Page对象

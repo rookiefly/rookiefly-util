@@ -1,7 +1,5 @@
 package com.rookiefly.commons.mybatis;
 
-import java.util.Properties;
-
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Interceptor;
@@ -12,12 +10,14 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import java.util.Properties;
+
 /**
  * Mybatis - 通用分页拦截器
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-@Intercepts(@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
-                                                                        RowBounds.class, ResultHandler.class }))
+@SuppressWarnings({"rawtypes", "unchecked"})
+@Intercepts(@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
+        RowBounds.class, ResultHandler.class}))
 public class PageHelper implements Interceptor {
     //sql工具类
     private SqlUtil sqlUtil;
@@ -25,7 +25,7 @@ public class PageHelper implements Interceptor {
     /**
      * 开始分页
      *
-     * @param pageNum  页码
+     * @param pageNum 页码
      */
     public static Page startPage(int pageNum) {
         return startPage(pageNum, SqlUtil.getDefaultPageSize(), true);

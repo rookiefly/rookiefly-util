@@ -7,7 +7,23 @@ import net.sf.jsqlparser.expression.operators.relational.GreaterThan;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.Statement;
-import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.statement.select.AllColumns;
+import net.sf.jsqlparser.statement.select.AllTableColumns;
+import net.sf.jsqlparser.statement.select.FromItem;
+import net.sf.jsqlparser.statement.select.Join;
+import net.sf.jsqlparser.statement.select.LateralSubSelect;
+import net.sf.jsqlparser.statement.select.OrderByElement;
+import net.sf.jsqlparser.statement.select.PlainSelect;
+import net.sf.jsqlparser.statement.select.Select;
+import net.sf.jsqlparser.statement.select.SelectBody;
+import net.sf.jsqlparser.statement.select.SelectExpressionItem;
+import net.sf.jsqlparser.statement.select.SelectItem;
+import net.sf.jsqlparser.statement.select.SetOperationList;
+import net.sf.jsqlparser.statement.select.SubJoin;
+import net.sf.jsqlparser.statement.select.SubSelect;
+import net.sf.jsqlparser.statement.select.Top;
+import net.sf.jsqlparser.statement.select.ValuesList;
+import net.sf.jsqlparser.statement.select.WithItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,23 +45,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SqlServer {
     //缓存结果
-    private static final Map<String, String> CACHE                  = new ConcurrentHashMap<String, String>();
+    private static final Map<String, String> CACHE = new ConcurrentHashMap<String, String>();
     //开始行号
-    private static final String              START_ROW              = String.valueOf(Long.MIN_VALUE);
+    private static final String START_ROW = String.valueOf(Long.MIN_VALUE);
     //结束行号
-    private static final String              PAGE_SIZE              = String.valueOf(Long.MAX_VALUE);
+    private static final String PAGE_SIZE = String.valueOf(Long.MAX_VALUE);
     //外层包装表
-    private static final String              WRAP_TABLE             = "WRAP_OUTER_TABLE";
+    private static final String WRAP_TABLE = "WRAP_OUTER_TABLE";
     //表别名名字
-    private static final String              PAGE_TABLE_NAME        = "PAGE_TABLE_ALIAS";
+    private static final String PAGE_TABLE_NAME = "PAGE_TABLE_ALIAS";
     //private
-    public static final Alias                PAGE_TABLE_ALIAS       = new Alias(PAGE_TABLE_NAME);
+    public static final Alias PAGE_TABLE_ALIAS = new Alias(PAGE_TABLE_NAME);
     //行号
-    private static final String              PAGE_ROW_NUMBER        = "PAGE_ROW_NUMBER";
+    private static final String PAGE_ROW_NUMBER = "PAGE_ROW_NUMBER";
     //行号列
-    private static final Column              PAGE_ROW_NUMBER_COLUMN = new Column(PAGE_ROW_NUMBER);
+    private static final Column PAGE_ROW_NUMBER_COLUMN = new Column(PAGE_ROW_NUMBER);
     //TOP 100 PERCENT
-    private static final Top                 TOP100_PERCENT;
+    private static final Top TOP100_PERCENT;
 
     //静态方法处理
     static {

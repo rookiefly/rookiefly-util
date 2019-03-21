@@ -1,27 +1,19 @@
 package com.rookiefly.commons.imagetool;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-
 class TipPanel extends JPanel implements MouseListener {
     private static final long serialVersionUID = 1L;
-    static final Rectangle    RECT_THIS        = new Rectangle(5, 5, 150, 100);
-    ScreenCapture             captureFrame;
-    JLabel                    lblEsc           = new JLabel("双击选定,按ESC退出截屏");
-    JLabel                    lblPixel         = new JLabel();
-    JLabel                    lblRect          = new JLabel();
-    JLabel                    lblColor         = new JLabel();
+    static final Rectangle RECT_THIS = new Rectangle(5, 5, 150, 100);
+    ScreenCapture captureFrame;
+    JLabel lblEsc = new JLabel("双击选定,按ESC退出截屏");
+    JLabel lblPixel = new JLabel();
+    JLabel lblRect = new JLabel();
+    JLabel lblColor = new JLabel();
 
     public TipPanel(ScreenCapture captureFrame) {
         this.captureFrame = captureFrame;
@@ -95,9 +87,9 @@ class TipPanel extends JPanel implements MouseListener {
         }
         this.lblColor.setBackground(color);
         this.lblColor.setText(("<html><span style='font-family:Verdana'>" + (color.getRed() < 16 ? "0" : "")
-                               + Integer.toString(color.getRed(), 16) + (color.getGreen() < 16 ? "0" : "")
-                               + Integer.toString(color.getGreen(), 16) + (color.getBlue() < 16 ? "0" : "") + Integer
-            .toString(color.getBlue(), 16)).toUpperCase());
+                + Integer.toString(color.getRed(), 16) + (color.getGreen() < 16 ? "0" : "")
+                + Integer.toString(color.getGreen(), 16) + (color.getBlue() < 16 ? "0" : "") + Integer
+                .toString(color.getBlue(), 16)).toUpperCase());
     }
 
     public void mouseEntered(MouseEvent evt) {

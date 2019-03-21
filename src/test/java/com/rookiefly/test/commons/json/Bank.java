@@ -10,9 +10,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class Bank {
 
-	private String bankId;
+    private String bankId;
 
-	private String iconUrl;
+    private String iconUrl;
 
-	private Account account;
+    private Account account;
 }

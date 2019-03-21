@@ -1,22 +1,21 @@
 package com.rookiefly.commons.json;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.codehaus.jackson.type.TypeReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * 
- * 
  * @author Administrator
  * @version $Id: JsonUtil.java, v 0.1 2015年4月16日 下午1:34:27 Administrator Exp $
  */
 @SuppressWarnings("deprecation")
 public class JsonUtil {
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
     static {
         // 为保持对象版本兼容性,忽略未知的属性
         MAPPER.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -26,12 +25,10 @@ public class JsonUtil {
 
     /**
      * 将一个对象编码为json字符串
-     * 
-     * @param obj
-     *            ,if null return "null" 要编码的字符串
+     *
+     * @param obj ,if null return "null" 要编码的字符串
      * @return json字符串
-     * @throws RuntimeException
-     *             若对象不能被编码为json串
+     * @throws RuntimeException 若对象不能被编码为json串
      */
     public static String toJson(Object obj) {
         if (obj == null) {
@@ -46,7 +43,7 @@ public class JsonUtil {
 
     /**
      * 将一个对象编码成字节
-     * 
+     *
      * @param obj
      * @return
      */
@@ -61,16 +58,13 @@ public class JsonUtil {
 
     /**
      * 将一个json字符串解码为java对象
-     * 
+     * <p>
      * 注意：如果传入的字符串为null，那么返回的对象也为null
-     * 
-     * @param json
-     *            json字符串
-     * @param cls
-     *            对象类型
+     *
+     * @param json json字符串
+     * @param cls  对象类型
      * @return 解析后的java对象
-     * @throws RuntimeException
-     *             若解析json过程中发生了异常
+     * @throws RuntimeException 若解析json过程中发生了异常
      */
     public static <T> T toObject(String json, Class<T> cls) {
         if (json == null) {
@@ -85,11 +79,9 @@ public class JsonUtil {
 
     /**
      * 将json字节解码为java对象
-     * 
-     * @param jsonBytes
-     *            json字节
-     * @param cls
-     *            对象类型
+     *
+     * @param jsonBytes json字节
+     * @param cls       对象类型
      * @return 解码后的对象
      */
     public static <T> T toObject(byte[] jsonBytes, Class<T> cls) {
@@ -102,7 +94,7 @@ public class JsonUtil {
 
     /**
      * 将json字节解码为java对象
-     * 
+     *
      * @param json
      * @param typeReference
      * @param <T>
@@ -119,7 +111,7 @@ public class JsonUtil {
 
     /**
      * 读取JSON字符串为MAP
-     * 
+     *
      * @param json
      * @return
      */

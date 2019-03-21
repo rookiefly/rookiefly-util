@@ -1,12 +1,5 @@
 package com.rookiefly.commons.mybatis;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.apache.ibatis.builder.SqlSourceBuilder;
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.builder.annotation.ProviderSqlSource;
@@ -29,55 +22,62 @@ import org.apache.ibatis.scripting.xmltags.SqlNode;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 /**
  * Mybatis - sql工具，获取分页和count的MappedStatement，设置分页参数
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class SqlUtil {
-    private static final ThreadLocal<Page>    LOCAL_PAGE                     = new ThreadLocal<Page>();
+    private static final ThreadLocal<Page> LOCAL_PAGE = new ThreadLocal<Page>();
 
-    private static int                        defaultPageSize                = 20;
+    private static int defaultPageSize = 20;
 
     //RowBounds参数offset作为PageNum使用 - 默认不使用
-    private boolean                           offsetAsPageNum                = false;
+    private boolean offsetAsPageNum = false;
     //RowBounds是否进行count查询 - 默认不查询
-    private boolean                           rowBoundsWithCount             = false;
+    private boolean rowBoundsWithCount = false;
     //当设置为true的时候，如果pagesize设置为0（或RowBounds的limit=0），就不执行分页，返回全部结果
-    private boolean                           pageSizeZero                   = false;
+    private boolean pageSizeZero = false;
     //分页合理化
-    private boolean                           reasonable                     = false;
+    private boolean reasonable = false;
     //params参数映射
-    private static Map<String, String>        PARAMS                         = new HashMap<String, String>(5);
+    private static Map<String, String> PARAMS = new HashMap<String, String>(5);
     //request获取方法
-    private static Boolean                    hasRequest;
-    private static Class<?>                   requestClass;
-    private static Method                     getParameterMap;
+    private static Boolean hasRequest;
+    private static Class<?> requestClass;
+    private static Method getParameterMap;
 
     static {
         try {
             requestClass = Class.forName("javax.servlet.ServletRequest");
-            getParameterMap = requestClass.getMethod("getParameterMap", new Class[] {});
+            getParameterMap = requestClass.getMethod("getParameterMap", new Class[]{});
             hasRequest = true;
         } catch (Exception e) {
             hasRequest = false;
         }
     }
 
-    private static final List<ResultMapping>  EMPTY_RESULTMAPPING            = new ArrayList<ResultMapping>(0);
+    private static final List<ResultMapping> EMPTY_RESULTMAPPING = new ArrayList<ResultMapping>(0);
     //分页的id后缀
-    private static final String               SUFFIX_PAGE                    = "_PageHelper";
+    private static final String SUFFIX_PAGE = "_PageHelper";
     //count查询的id后缀
-    private static final String               SUFFIX_COUNT                   = SUFFIX_PAGE + "_Count";
+    private static final String SUFFIX_COUNT = SUFFIX_PAGE + "_Count";
     //第一个分页参数
-    private static final String               PAGEPARAMETER_FIRST            = "First" + SUFFIX_PAGE;
+    private static final String PAGEPARAMETER_FIRST = "First" + SUFFIX_PAGE;
     //第二个分页参数
-    private static final String               PAGEPARAMETER_SECOND           = "Second" + SUFFIX_PAGE;
+    private static final String PAGEPARAMETER_SECOND = "Second" + SUFFIX_PAGE;
 
-    private static final String               PROVIDER_OBJECT                = "_provider_object";
+    private static final String PROVIDER_OBJECT = "_provider_object";
     //存储原始的参数
-    private static final String               ORIGINAL_PARAMETER_OBJECT      = "_ORIGINAL_PARAMETER_OBJECT";
+    private static final String ORIGINAL_PARAMETER_OBJECT = "_ORIGINAL_PARAMETER_OBJECT";
 
-    private static final ObjectFactory        DEFAULT_OBJECT_FACTORY         = new DefaultObjectFactory();
+    private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
     private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
 
     /**
@@ -93,9 +93,9 @@ public class SqlUtil {
     //处理SQL
     private static final SqlParser sqlParser = new SqlParser();
     //具体针对数据库的parser
-    private Parser                 parser;
+    private Parser parser;
     //数据库方言
-    private Dialect                dialect;
+    private Dialect dialect;
 
     //数据库方言 - 使用枚举限制数据库类型
     public enum Dialect {
@@ -169,7 +169,7 @@ public class SqlUtil {
         }
         if (hasRequest && requestClass.isAssignableFrom(params.getClass())) {
             try {
-                paramsObject = forObject(getParameterMap.invoke(params, new Object[] {}));
+                paramsObject = forObject(getParameterMap.invoke(params, new Object[]{}));
             } catch (Exception e) {
                 //忽略
             }
@@ -287,7 +287,7 @@ public class SqlUtil {
             }
             //pageSize>0的时候执行分页查询，pageSize<=0的时候不执行相当于可能只返回了一个count
             if (page.getPageSize() > 0
-                && ((rowBounds == RowBounds.DEFAULT && page.getPageNum() > 0) || rowBounds != RowBounds.DEFAULT)) {
+                    && ((rowBounds == RowBounds.DEFAULT && page.getPageNum() > 0) || rowBounds != RowBounds.DEFAULT)) {
                 //将参数中的MappedStatement替换为新的qs
                 processPageMappedStatement(ms, sqlSource, page, args);
                 //执行分页查询
@@ -494,9 +494,9 @@ public class SqlUtil {
                 newParameterMappings.addAll(boundSql.getParameterMappings());
             }
             newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_FIRST, Integer.class)
-                .build());
+                    .build());
             newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_SECOND, Integer.class)
-                .build());
+                    .build());
             return newParameterMappings;
         }
 
@@ -511,7 +511,7 @@ public class SqlUtil {
                 //动态sql时的判断条件不会出现在ParameterMapping中，但是必须有，所以这里需要收集所有的getter属性
                 //TypeHandlerRegistry可以直接处理的会作为一个直接使用的对象进行处理
                 boolean hasTypeHandler = ms.getConfiguration().getTypeHandlerRegistry()
-                    .hasTypeHandler(parameterObject.getClass());
+                        .hasTypeHandler(parameterObject.getClass());
                 MetaObject metaObject = forObject(parameterObject);
                 //需要针对注解形式的MyProviderSqlSource保存原值
                 if (ms.getSqlSource() instanceof MyProviderSqlSource) {
@@ -527,7 +527,7 @@ public class SqlUtil {
                     for (ParameterMapping parameterMapping : boundSql.getParameterMappings()) {
                         String name = parameterMapping.getProperty();
                         if (!name.equals(PAGEPARAMETER_FIRST) && !name.equals(PAGEPARAMETER_SECOND)
-                            && paramMap.get(name) == null) {
+                                && paramMap.get(name) == null) {
                             if (hasTypeHandler || parameterMapping.getJavaType().equals(parameterObject.getClass())) {
                                 paramMap.put(name, parameterObject);
                                 break;
@@ -671,11 +671,11 @@ public class SqlUtil {
      */
     private class MyDynamicSqlSource implements SqlSource {
         private Configuration configuration;
-        private SqlNode       rootSqlNode;
+        private SqlNode rootSqlNode;
         /**
          * 用于区分动态的count查询或分页查询
          */
-        private Boolean       count;
+        private Boolean count;
 
         public MyDynamicSqlSource(Configuration configuration, SqlNode rootSqlNode, Boolean count) {
             this.configuration = configuration;
@@ -689,7 +689,7 @@ public class SqlUtil {
             //如果发现参数是Map并且包含该KEY，就使用备份的该值
             //解决bug#25:http://git.oschina.net/free/Mybatis_PageHelper/issues/25
             if (parameterObject != null && parameterObject instanceof Map
-                && ((Map) parameterObject).containsKey(ORIGINAL_PARAMETER_OBJECT)) {
+                    && ((Map) parameterObject).containsKey(ORIGINAL_PARAMETER_OBJECT)) {
                 context = new DynamicContext(configuration, ((Map) parameterObject).get(ORIGINAL_PARAMETER_OBJECT));
             } else {
                 context = new DynamicContext(configuration, parameterObject);
@@ -716,13 +716,13 @@ public class SqlUtil {
      * 自定义ProviderSqlSource，代理方法
      */
     private class MyProviderSqlSource implements SqlSource {
-        private Configuration     configuration;
+        private Configuration configuration;
         private ProviderSqlSource providerSqlSource;
 
         /**
          * 用于区分动态的count查询或分页查询
          */
-        private Boolean           count;
+        private Boolean count;
 
         private MyProviderSqlSource(Configuration configuration, ProviderSqlSource providerSqlSource, Boolean count) {
             this.configuration = configuration;
@@ -740,10 +740,10 @@ public class SqlUtil {
             }
             if (count) {
                 return new BoundSql(configuration, parser.getCountSql(boundSql.getSql()),
-                    boundSql.getParameterMappings(), parameterObject);
+                        boundSql.getParameterMappings(), parameterObject);
             } else {
                 return new BoundSql(configuration, parser.getPageSql(boundSql.getSql()),
-                    parser.getPageParameterMapping(configuration, boundSql), parameterObject);
+                        parser.getPageParameterMapping(configuration, boundSql), parameterObject);
             }
         }
     }
@@ -761,7 +761,7 @@ public class SqlUtil {
         MappedStatement qs = null;
         if (ms.getId().endsWith(SUFFIX_PAGE) || ms.getId().endsWith(SUFFIX_COUNT)) {
             throw new RuntimeException(
-                "分页插件配置错误:请不要在系统中配置多个分页插件(使用Spring时,mybatis-config.xml和Spring<bean>配置方式，请选择其中一种，不要同时配置多个分页插件)！");
+                    "分页插件配置错误:请不要在系统中配置多个分页插件(使用Spring时,mybatis-config.xml和Spring<bean>配置方式，请选择其中一种，不要同时配置多个分页插件)！");
         }
         if (parser.isSupportedMappedStatementCache()) {
             try {
@@ -795,7 +795,7 @@ public class SqlUtil {
     private MappedStatement newMappedStatement(MappedStatement ms, SqlSource sqlSource, String suffix) {
         String id = ms.getId() + suffix;
         MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(), id, sqlSource,
-            ms.getSqlCommandType());
+                ms.getSqlCommandType());
         builder.resource(ms.getResource());
         builder.fetchSize(ms.getFetchSize());
         builder.statementType(ms.getStatementType());
@@ -816,7 +816,7 @@ public class SqlUtil {
             //count查询返回值int
             List<ResultMap> resultMaps = new ArrayList<ResultMap>();
             ResultMap resultMap = new ResultMap.Builder(ms.getConfiguration(), id, int.class, EMPTY_RESULTMAPPING)
-                .build();
+                    .build();
             resultMaps.add(resultMap);
             builder.resultMaps(resultMaps);
         }
@@ -888,7 +888,7 @@ public class SqlUtil {
     private SqlSource getPageSqlSource(Configuration configuration, SqlSource sqlSource, Object parameterObject) {
         BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
         return new StaticSqlSource(configuration, parser.getPageSql(boundSql.getSql()), parser.getPageParameterMapping(
-            configuration, boundSql));
+                configuration, boundSql));
     }
 
     /**
@@ -900,7 +900,7 @@ public class SqlUtil {
     private SqlSource getCountSqlSource(Configuration configuration, SqlSource sqlSource, Object parameterObject) {
         BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
         return new StaticSqlSource(configuration, parser.getCountSql(boundSql.getSql()),
-            boundSql.getParameterMappings());
+                boundSql.getParameterMappings());
     }
 
     /**

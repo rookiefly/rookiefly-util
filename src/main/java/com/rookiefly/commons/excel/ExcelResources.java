@@ -7,14 +7,15 @@ import java.lang.annotation.Target;
 
 /**
  * 用来在对象的get方法上加入的annotation，通过该annotation说明某个属性所对应的标题
- * @author wanggaoixang
  *
+ * @author wanggaoixang
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface ExcelResources {
     /**
      * 属性的标题名称
+     *
      * @return
      */
     String title();
@@ -22,6 +23,7 @@ public @interface ExcelResources {
     /**
      * 在excel的顺序
      * Lower values have higher priority.
+     *
      * @return
      */
     int order() default 9999;

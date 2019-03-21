@@ -90,7 +90,7 @@ public class QRCodeGenerator {
 
         ImageIO.write(combined, "PNG", imageFile);
     }
-    
+
     public static void main(String[] args) {
         try {
             generateQRCodeImage("https://github.com/rookiefly", 350, 350, QR_CODE_IMAGE_PATH);

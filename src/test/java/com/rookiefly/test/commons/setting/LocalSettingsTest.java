@@ -21,7 +21,7 @@ public class LocalSettingsTest {
     }
 
     @Test
-    public void test02(){
+    public void test02() {
         String classpath = this.getClass().getResource("/").getPath();
         System.out.println(classpath);
         File classDir = new File(classpath);
@@ -38,7 +38,7 @@ public class LocalSettingsTest {
     }
 
     @Test
-    public void test03(){
+    public void test03() {
         System.out.println(System.getProperty("java.library.path"));
     }
 

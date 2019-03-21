@@ -1,10 +1,10 @@
 package com.rookiefly.test.commons.mq;
 
-import java.util.Properties;
-
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
+
+import java.util.Properties;
 
 public class KafkaProducer {
     private final Producer<String, String> producer;

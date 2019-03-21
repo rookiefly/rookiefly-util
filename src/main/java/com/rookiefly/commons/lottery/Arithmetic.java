@@ -1,7 +1,11 @@
 package com.rookiefly.commons.lottery;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Arithmetic {
@@ -14,6 +18,7 @@ public class Arithmetic {
     public Arithmetic(List<Prize> prizes) {
         init(prizes);
     }
+
     public int lottery() {
         // 获取1-1000000之间的一个随机数
         int luckyNumber = ThreadLocalRandom.current().nextInt(mulriple);
@@ -48,7 +53,7 @@ public class Arithmetic {
             int prizeId = prize.getPrizeId();
             // 划分区间
             int currentScope = lastScope + prize.getProbability().multiply(new BigDecimal(mulriple)).intValue();
-            prizeScopes.put(prizeId, new int[] { lastScope + 1, currentScope });
+            prizeScopes.put(prizeId, new int[]{lastScope + 1, currentScope});
             prizeQuantity.put(prizeId, prize.getQuantity());
 
             lastScope = currentScope;

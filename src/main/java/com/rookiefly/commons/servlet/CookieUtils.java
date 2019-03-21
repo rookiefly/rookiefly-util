@@ -14,11 +14,11 @@ public class CookieUtils {
 
     private final static String defEncode = "UTF-8";
 
-    private static final Log    log       = LogFactory.getLog(CookieUtils.class);
+    private static final Log log = LogFactory.getLog(CookieUtils.class);
 
     /**
      * 获取cookie值，默认编码UTF-8
-     * 
+     *
      * @param request
      * @param name
      * @return
@@ -29,7 +29,7 @@ public class CookieUtils {
 
     /**
      * 获取cookie值，指定编码
-     * 
+     *
      * @param request
      * @param name
      * @param encode
@@ -56,7 +56,7 @@ public class CookieUtils {
 
     /**
      * 获取cookie
-     * 
+     *
      * @param request
      * @param name
      * @return

@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * ThreadFactory构造器
- * @author rookiefly
  *
+ * @author rookiefly
  */
 public class ThreadFactoryBuilder {
 

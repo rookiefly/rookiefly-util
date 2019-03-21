@@ -3,8 +3,8 @@ package com.rookiefly.commons.qrcode;
 public class LogoImage {
 
     private String imgPath; //图片路径
-    private int    height; //图片高度
-    private int    width;  //图片宽度
+    private int height; //图片高度
+    private int width;  //图片宽度
 
     public LogoImage() {
     }

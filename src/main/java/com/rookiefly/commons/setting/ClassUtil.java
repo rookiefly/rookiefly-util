@@ -5,18 +5,16 @@ import java.net.URL;
 
 /**
  * 资源工具类
- * 
+ *
  * @author rookiefly
  */
 public class ClassUtil {
     /**
      * 获取classpath下的资源
-     * 
-     * @param cls
-     *            class类
-     * @param path
-     *            资源文件路径
-     * @return 资源路径的输入流,若不存在,则返回null
+     *
+     * @param cls  class类
+     * @param path 资源文件路径
+     * @return 资源路径的输入流, 若不存在, 则返回null
      */
     @SuppressWarnings("rawtypes")
     public static InputStream getResourceAsStream(Class cls, String path) {

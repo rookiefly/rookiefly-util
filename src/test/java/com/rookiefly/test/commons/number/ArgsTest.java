@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class ArgsTest {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		for (String arg : args) {
-			System.out.println(arg);
-		}
+        for (String arg : args) {
+            System.out.println(arg);
+        }
 
-		System.out.println(System.getProperty("appHome"));
-		ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
-		new Thread(new Runnable() {
+        System.out.println(System.getProperty("appHome"));
+        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 String test = "aaaa";
@@ -36,12 +36,12 @@ public class ArgsTest {
                 }
             }
         }).start();
-		System.out.println(threadMXBean.getThreadCount());
-		List<GarbageCollectorMXBean> garbageCollectorMXBeans = ManagementFactory.getGarbageCollectorMXBeans();
-		System.out.println(garbageCollectorMXBeans.size());
-		for (GarbageCollectorMXBean garbageCollectorMXBean : garbageCollectorMXBeans) {
-			System.out.println(garbageCollectorMXBean.getName() + "@" + garbageCollectorMXBean.getCollectionCount()
-			        + "@" + garbageCollectorMXBean.getCollectionTime());
-		}
-	}
+        System.out.println(threadMXBean.getThreadCount());
+        List<GarbageCollectorMXBean> garbageCollectorMXBeans = ManagementFactory.getGarbageCollectorMXBeans();
+        System.out.println(garbageCollectorMXBeans.size());
+        for (GarbageCollectorMXBean garbageCollectorMXBean : garbageCollectorMXBeans) {
+            System.out.println(garbageCollectorMXBean.getName() + "@" + garbageCollectorMXBean.getCollectionCount()
+                    + "@" + garbageCollectorMXBean.getCollectionTime());
+        }
+    }
 }

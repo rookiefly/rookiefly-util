@@ -42,10 +42,10 @@ public class NumberTest {
 
     @Test
     public void testRound() {
-        System.out.println("舍掉小数取整:Math.floor(2)=" + (int)Math.floor(2));
-        System.out.println("舍掉小数取整:Math.floor(2.1)=" + (int)Math.floor(2.1));
-        System.out.println("舍掉小数取整:Math.floor(2.5)=" + (int)Math.floor(2.5));
-        System.out.println("舍掉小数取整:Math.floor(2.9)=" + (int)Math.floor(2.9));
+        System.out.println("舍掉小数取整:Math.floor(2)=" + (int) Math.floor(2));
+        System.out.println("舍掉小数取整:Math.floor(2.1)=" + (int) Math.floor(2.1));
+        System.out.println("舍掉小数取整:Math.floor(2.5)=" + (int) Math.floor(2.5));
+        System.out.println("舍掉小数取整:Math.floor(2.9)=" + (int) Math.floor(2.9));
         System.out.println("四舍五入取整:(2)=" + new BigDecimal("2").setScale(1, BigDecimal.ROUND_HALF_UP));
         System.out.println("四舍五入取整:(2.15)=" + new BigDecimal("2.15").setScale(1, BigDecimal.ROUND_HALF_UP));
         System.out.println("四舍五入取整:(2.56)=" + new BigDecimal("2.56").setScale(1, BigDecimal.ROUND_HALF_UP));
@@ -53,7 +53,7 @@ public class NumberTest {
     }
 
     @Test
-    public void testCharLen(){
+    public void testCharLen() {
         String ts = "abc汉子";
         Assert.assertEquals(ts.length(), 5);
         Assert.assertEquals(ts.getBytes().length, 7);
@@ -64,7 +64,7 @@ public class NumberTest {
 
         List<Integer> priceList = new ArrayList<Integer>();
         for (int i = 0; i < 6; i++) {
-            priceList.add(i+3);
+            priceList.add(i + 3);
         }
         Integer priceTotal = priceList.get(0);
         for (int i = 1; i < priceList.size(); i++) {
@@ -97,7 +97,7 @@ public class NumberTest {
     }
 
     @Test
-    public void testArray(){
+    public void testArray() {
         int[] a = new int[2];
         System.out.println(a);
         System.out.println(String.format("percent:%X%%", 5));
@@ -108,12 +108,14 @@ public class NumberTest {
     @Test
     public void testConstact() {
         Constant c = new Constant();
-        System.out.println(c.size);;
-        System.out.println(c.size);;
+        System.out.println(c.size);
+        ;
+        System.out.println(c.size);
+        ;
     }
 
     @Test
-    public void testRandomStr(){
+    public void testRandomStr() {
         System.out.println(RandomStringUtils.random(10, true, true));
 
     }

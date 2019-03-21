@@ -1,7 +1,8 @@
 package com.rookiefly.test.commons.json;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.*;
+import com.alibaba.fastjson.serializer.SerializeFilter;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.rookiefly.commons.json.SerializeFilterBuilder;
 import org.junit.Test;
 
@@ -25,8 +26,8 @@ public class FastJsonTest {
         String json = JSON.toJSONString(bank);
 
         System.out.println(json);
-        SerializerFeature[] serializerFeatures = new SerializerFeature[] {
-                SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.NotWriteRootClassName };
+        SerializerFeature[] serializerFeatures = new SerializerFeature[]{
+                SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.NotWriteRootClassName};
 
         SerializeFilter filter = SerializeFilterBuilder.newExcludeFilter(Account.class, "address");
 

@@ -20,7 +20,7 @@ public class DateTest {
     }
 
     @Test
-    public void test02(){
+    public void test02() {
 
     }
 }

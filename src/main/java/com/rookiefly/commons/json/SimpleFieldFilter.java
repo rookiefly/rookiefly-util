@@ -1,56 +1,55 @@
 package com.rookiefly.commons.json;
 
+import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.alibaba.fastjson.serializer.PropertyPreFilter;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import com.alibaba.fastjson.serializer.JSONSerializer;
-import com.alibaba.fastjson.serializer.PropertyPreFilter;
-import com.alibaba.fastjson.util.FieldInfo;
-
 public class SimpleFieldFilter implements PropertyPreFilter {
 
-	private Class<?> clazz;
+    private Class<?> clazz;
 
-	private final Set<String> includes = new HashSet<String>();
+    private final Set<String> includes = new HashSet<String>();
 
-	private final Set<String> excludes = new HashSet<String>();
+    private final Set<String> excludes = new HashSet<String>();
 
-	public SimpleFieldFilter() {
-	}
+    public SimpleFieldFilter() {
+    }
 
-	public SimpleFieldFilter(Class<?> clazz, String... excludesfields) {
-		this.clazz = clazz;
-		for (String item : excludesfields) {
-			if (item != null) {
-				this.excludes.add(item);
-			}
-		}
-	}
+    public SimpleFieldFilter(Class<?> clazz, String... excludesfields) {
+        this.clazz = clazz;
+        for (String item : excludesfields) {
+            if (item != null) {
+                this.excludes.add(item);
+            }
+        }
+    }
 
-	public SimpleFieldFilter(String[] includesfields, Class<?> clazz) {
-		this.clazz = clazz;
-		for (String item : includesfields) {
-			if (item != null) {
-				this.includes.add(item);
-			}
-		}
-	}
+    public SimpleFieldFilter(String[] includesfields, Class<?> clazz) {
+        this.clazz = clazz;
+        for (String item : includesfields) {
+            if (item != null) {
+                this.includes.add(item);
+            }
+        }
+    }
 
-	public Class<?> getClazz() {
-		return clazz;
-	}
+    public Class<?> getClazz() {
+        return clazz;
+    }
 
-	public Set<String> getIncludes() {
-		return includes;
-	}
+    public Set<String> getIncludes() {
+        return includes;
+    }
 
-	public Set<String> getExcludes() {
-		return excludes;
-	}
+    public Set<String> getExcludes() {
+        return excludes;
+    }
 
-	/**
-	 * @see com.alibaba.fastjson.serializer.PropertyFilter#apply(Object, String, Object)
-	 */
+    /**
+     * @see com.alibaba.fastjson.serializer.PropertyFilter#apply(Object, String, Object)
+     */
     @Override
     public boolean apply(JSONSerializer serializer, Object source, String name) {
         if (source == null) {

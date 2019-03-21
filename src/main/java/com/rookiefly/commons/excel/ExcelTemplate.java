@@ -1,5 +1,13 @@
 package com.rookiefly.commons.excel;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,14 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-
 /**
  * 该类实现了基于模板的导出
  * 如果要导出序号，需要在excel中定义一个标识为sernums
@@ -26,61 +26,61 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * 要从哪一行那一列开始替换需要定义一个标识为datas
  * 如果要设定相应的样式，可以在该行使用styles完成设定，此时所有此行都使用该样式
  * 如果使用defaultStyls作为表示，表示默认样式，如果没有defaultStyles使用datas行作为默认样式
- * @author wanggaoxiang
  *
+ * @author wanggaoxiang
  */
 public class ExcelTemplate {
     /**
      * 数据行标识
      */
-    public final static String      DATA_LINE     = "datas";
+    public final static String DATA_LINE = "datas";
     /**
      * 默认样式标识
      */
-    public final static String      DEFAULT_STYLE = "defaultStyles";
+    public final static String DEFAULT_STYLE = "defaultStyles";
     /**
      * 行样式标识
      */
-    public final static String      STYLE         = "styles";
+    public final static String STYLE = "styles";
     /**
      * 插入序号样式标识
      */
-    public final static String      SER_NUM       = "sernums";
-    private static ExcelTemplate    et            = new ExcelTemplate();
-    private Workbook                wb;
-    private Sheet                   sheet;
+    public final static String SER_NUM = "sernums";
+    private static ExcelTemplate et = new ExcelTemplate();
+    private Workbook wb;
+    private Sheet sheet;
     /**
      * 数据的初始化列数
      */
-    private int                     initColIndex;
+    private int initColIndex;
     /**
      * 数据的初始化行数
      */
-    private int                     initRowIndex;
+    private int initRowIndex;
     /**
      * 当前列数
      */
-    private int                     curColIndex;
+    private int curColIndex;
     /**
      * 当前行数
      */
-    private int                     curRowIndex;
+    private int curRowIndex;
     /**
      * 当前行对象
      */
-    private Row                     curRow;
+    private Row curRow;
     /**
      * 最后一行的数据
      */
-    private int                     lastRowIndex;
+    private int lastRowIndex;
     /**
      * 默认样式
      */
-    private CellStyle               defaultStyle;
+    private CellStyle defaultStyle;
     /**
      * 默认行高
      */
-    private float                   rowHeight;
+    private float rowHeight;
     /**
      * 存储某一方所对于的样式
      */
@@ -88,7 +88,7 @@ public class ExcelTemplate {
     /**
      * 序号的列
      */
-    private int                     serColIndex;
+    private int serColIndex;
 
     private ExcelTemplate() {
 
@@ -99,8 +99,10 @@ public class ExcelTemplate {
     }
 
     //1、读取相应的模板文档
+
     /**
      * 从classpath路径下读取相应的模板文件
+     *
      * @param path
      * @return
      */
@@ -120,6 +122,7 @@ public class ExcelTemplate {
 
     /**
      * 将文件写到相应的路径下
+     *
      * @param filepath
      */
     public void writeToFile(String filepath) {
@@ -145,6 +148,7 @@ public class ExcelTemplate {
 
     /**
      * 将文件写到某个输出流中
+     *
      * @param os
      */
     public void wirteToStream(OutputStream os) {
@@ -158,6 +162,7 @@ public class ExcelTemplate {
 
     /**
      * 从某个路径来读取模板
+     *
      * @param path
      * @return
      */
@@ -177,6 +182,7 @@ public class ExcelTemplate {
 
     /**
      * 创建相应的元素，基于String类型
+     *
      * @param value
      */
     public void createCell(String value) {
@@ -223,6 +229,7 @@ public class ExcelTemplate {
 
     /**
      * 设置某个元素的样式
+     *
      * @param c
      */
     private void setCellStyle(Cell c) {
@@ -264,6 +271,7 @@ public class ExcelTemplate {
 
     /**
      * 根据map替换相应的常量，通过Map中的值来替换#开头的值
+     *
      * @param datas
      */
     public void replaceFinalData(Map<String, String> datas) {
@@ -285,6 +293,7 @@ public class ExcelTemplate {
 
     /**
      * 基于Properties的替换，依然也是替换#开始的
+     *
      * @param prop
      */
     public void replaceFinalData(Properties prop) {

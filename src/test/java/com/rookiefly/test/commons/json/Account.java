@@ -9,7 +9,7 @@ public class Account {
 
     private String id;
 
-    @JSONField(name="username")
+    @JSONField(name = "username")
     private String name;
 
     private int age;
@@ -31,7 +31,7 @@ public class Account {
         this.id = id;
     }
 
-    @JSONField(name="name")
+    @JSONField(name = "name")
     public String getName() {
         return name;
     }

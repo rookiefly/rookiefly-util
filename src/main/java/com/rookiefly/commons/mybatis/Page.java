@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * Mybatis - 分页对象
- *
  */
 public class Page<E> extends ArrayList<E> {
     private static final long serialVersionUID = 1L;
@@ -15,47 +14,47 @@ public class Page<E> extends ArrayList<E> {
     /**
      * 不进行count查询
      */
-    private static final int  NO_SQL_COUNT     = -1;
+    private static final int NO_SQL_COUNT = -1;
     /**
      * 进行count查询
      */
-    private static final int  SQL_COUNT        = 0;
+    private static final int SQL_COUNT = 0;
     /**
      * 页码，从1开始
      */
-    private int               pageNum;
+    private int pageNum;
     /**
      * 页面大小
      */
-    private int               pageSize;
+    private int pageSize;
     /**
      * 起始行
      */
-    private int               startRow;
+    private int startRow;
     /**
      * 末行
      */
-    private int               endRow;
+    private int endRow;
     /**
      * 总数
      */
-    private long              total;
+    private long total;
     /**
      * 总页数
      */
-    private int               pages;
+    private int pages;
     /**
      * 针对sqlserver - 在其他数据库中该字段无效
      */
-    private String            orderBy;
+    private String orderBy;
     /**
      * 分页合理化
      */
-    private Boolean           reasonable;
+    private Boolean reasonable;
     /**
      * 当设置为true的时候，如果pagesize设置为0（或RowBounds的limit=0），就不执行分页，返回全部结果
      */
-    private Boolean           pageSizeZero;
+    private Boolean pageSizeZero;
 
     public Page() {
         super();

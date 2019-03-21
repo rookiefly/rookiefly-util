@@ -1,37 +1,31 @@
 package com.rookiefly.commons.imagetool;
 
-import java.awt.Color;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.UIManager;
-
 public class MainFrame extends JFrame implements ActionListener, ScreenCaptureListener {
 
     private static final long serialVersionUID = 1L;
-    public static final int   MIN_WIDTH        = 500;
-    public static final int   MIN_HEIGHT       = 500;
-    public ScreenCapture      captureFrame;
-    ImagePanel                panel            = new ImagePanel(this);
-    JMenuItem                 openItem;
-    JMenuItem                 saveItem;
-    JMenuItem                 exitItem;
-    JMenuItem                 blurItem;
-    JMenuItem                 sharpenItem;
-    JMenuItem                 edgeItem;
-    JMenuItem                 leftMirrorItem;
-    JMenuItem                 topMirrorItem;
-    JMenuItem                 rotateItem1;
-    JMenuItem                 rotateItem2;
-    JMenuItem                 resetItem;
-    JMenuItem                 clearItem;
-    JMenuItem                 captureItem;
+    public static final int MIN_WIDTH = 500;
+    public static final int MIN_HEIGHT = 500;
+    public ScreenCapture captureFrame;
+    ImagePanel panel = new ImagePanel(this);
+    JMenuItem openItem;
+    JMenuItem saveItem;
+    JMenuItem exitItem;
+    JMenuItem blurItem;
+    JMenuItem sharpenItem;
+    JMenuItem edgeItem;
+    JMenuItem leftMirrorItem;
+    JMenuItem topMirrorItem;
+    JMenuItem rotateItem1;
+    JMenuItem rotateItem2;
+    JMenuItem resetItem;
+    JMenuItem clearItem;
+    JMenuItem captureItem;
 
     public MainFrame(String title) {
         super(title);

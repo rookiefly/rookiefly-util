@@ -1,6 +1,8 @@
 package com.rookiefly.commons.imagetool;
 
-import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -11,16 +13,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 public class ImagePanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    MainFrame                 mainFrame;
-    String                    imageFileName;
-    BufferedImage             buffImage;
-    BufferedImage             srcImage;
+    MainFrame mainFrame;
+    String imageFileName;
+    BufferedImage buffImage;
+    BufferedImage srcImage;
 
     public ImagePanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -98,7 +96,7 @@ public class ImagePanel extends JPanel {
         try {
             BufferedImage dest = new BufferedImage(this.buffImage.getWidth(), this.buffImage.getHeight(), buffType);
             dest.getGraphics().drawImage(this.buffImage, 0, 0, this.buffImage.getWidth(), this.buffImage.getHeight(),
-                null);
+                    null);
             File file = new File(this.imageFileName);
             if (file.exists()) {
                 file.delete();
@@ -130,7 +128,7 @@ public class ImagePanel extends JPanel {
         if (!imageCheck()) {
             return;
         }
-        float[] elements = { 0.0F, -1.0F, 0.0F, -1.0F, 5.0F, -1.0F, 0.0F, -1.0F, 0.0F };
+        float[] elements = {0.0F, -1.0F, 0.0F, -1.0F, 5.0F, -1.0F, 0.0F, -1.0F, 0.0F};
         convoleOp(elements);
     }
 
@@ -138,7 +136,7 @@ public class ImagePanel extends JPanel {
         if (!imageCheck()) {
             return;
         }
-        float[] elements = { 0.0F, -1.0F, 0.0F, 1.0F, 4.0F, -1.0F, 0.0F, -1.0F, 0.0F };
+        float[] elements = {0.0F, -1.0F, 0.0F, 1.0F, 4.0F, -1.0F, 0.0F, -1.0F, 0.0F};
         convoleOp(elements);
     }
 
@@ -182,7 +180,7 @@ public class ImagePanel extends JPanel {
         if ((radius == 1) && (this.buffImage.getHeight() != this.buffImage.getWidth())) {
             if (this.buffImage.getHeight() < this.buffImage.getWidth())
                 this.buffImage = filteredImage.getSubimage(w - this.buffImage.getHeight(), 0,
-                    this.buffImage.getHeight(), this.buffImage.getWidth());
+                        this.buffImage.getHeight(), this.buffImage.getWidth());
             else if (this.buffImage.getHeight() > this.buffImage.getWidth())
                 this.buffImage = filteredImage.getSubimage(0, 0, this.buffImage.getHeight(), this.buffImage.getWidth());
         } else {
@@ -198,7 +196,7 @@ public class ImagePanel extends JPanel {
         Kernel kernel = new Kernel(3, 3, elems);
         ConvolveOp op = new ConvolveOp(kernel);
         BufferedImage filteredImage = new BufferedImage(this.buffImage.getWidth(), this.buffImage.getHeight(),
-            this.buffImage.getType());
+                this.buffImage.getType());
         op.filter(this.buffImage, filteredImage);
         this.buffImage = filteredImage;
         repaint();

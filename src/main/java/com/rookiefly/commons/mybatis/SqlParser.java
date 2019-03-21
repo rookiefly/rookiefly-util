@@ -1,10 +1,5 @@
 package com.rookiefly.commons.mybatis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Alias;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
@@ -25,14 +20,18 @@ import net.sf.jsqlparser.statement.select.SubSelect;
 import net.sf.jsqlparser.statement.select.ValuesList;
 import net.sf.jsqlparser.statement.select.WithItem;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * sql解析类，提供更智能的count查询sql
- *
  */
 @SuppressWarnings("rawtypes")
 public class SqlParser {
     private static final List<SelectItem> COUNT_ITEM;
-    private static final Alias            TABLE_ALIAS;
+    private static final Alias TABLE_ALIAS;
 
     static {
         COUNT_ITEM = new ArrayList<SelectItem>();
@@ -43,7 +42,7 @@ public class SqlParser {
     }
 
     //缓存已经修改过的sql
-    private Map<String, String>           CACHE = new ConcurrentHashMap<String, String>();
+    private Map<String, String> CACHE = new ConcurrentHashMap<String, String>();
 
     public void isSupportedSql(String sql) {
         if (sql.trim().toUpperCase().endsWith("FOR UPDATE")) {
@@ -111,9 +110,9 @@ public class SqlParser {
         // select中包含参数时在else中处理
         // select中包含group by时在else中处理
         if (selectBody instanceof PlainSelect
-            && !selectItemsHashParameters(((PlainSelect) selectBody).getSelectItems())
-            && ((PlainSelect) selectBody).getGroupByColumnReferences() == null
-            && ((PlainSelect) selectBody).getDistinct() == null) {
+                && !selectItemsHashParameters(((PlainSelect) selectBody).getSelectItems())
+                && ((PlainSelect) selectBody).getGroupByColumnReferences() == null
+                && ((PlainSelect) selectBody).getDistinct() == null) {
             ((PlainSelect) selectBody).setSelectItems(COUNT_ITEM);
         } else {
             PlainSelect plainSelect = new PlainSelect();

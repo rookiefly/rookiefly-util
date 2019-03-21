@@ -1,9 +1,9 @@
 package com.rookiefly.commons.imagetool;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,11 +11,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URL;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
 
 public class Toolkit {
     private static final ClassLoader cl = Toolkit.class.getClassLoader();
@@ -116,7 +111,7 @@ public class Toolkit {
             public boolean accept(File f) {
                 String name = f.getName().toLowerCase();
                 return (name.endsWith(".gif")) || (name.endsWith(".jpg")) || (name.endsWith(".jpeg"))
-                       || (name.endsWith(".png")) || (f.isDirectory());
+                        || (name.endsWith(".png")) || (f.isDirectory());
             }
 
             public String getDescription() {

@@ -7,7 +7,11 @@ import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.plugin.*;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.plugin.Plugin;
+import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
@@ -27,31 +31,32 @@ import java.util.Properties;
 
 /**
  * Mybatis分页拦截器
- * 
+ *
  * <p>
  * 对<code>StatementHandler</code>对象的prepare(Connection)方法进行拦截,以实现mybatis自动分页功能
  * </P>
+ *
  * @author rookiefly
  */
-@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
+@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class})})
 public class PageInterceptor implements Interceptor {
 
-    private static final Log                  logger                         = LogFactory.getLog(PageInterceptor.class);
+    private static final Log logger = LogFactory.getLog(PageInterceptor.class);
 
-    private static final ObjectFactory        DEFAULT_OBJECT_FACTORY         = new DefaultObjectFactory();
+    private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
     private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
 
-    private static String                     defaultDialect                 = "mysql";                                 // 数据库类型(默认为mysql)
-    private static String                     defaultPageSqlId               = "pageQuery";                             // 需要拦截的id(支持正则匹配)
-    private static String                     dialect                        = "";                                      // 数据库类型
-    private static String                    pageSqlId                      = "";                                      // 需要拦截的id(支持正则匹配)
+    private static String defaultDialect = "mysql";                                 // 数据库类型(默认为mysql)
+    private static String defaultPageSqlId = "pageQuery";                             // 需要拦截的id(支持正则匹配)
+    private static String dialect = "";                                      // 数据库类型
+    private static String pageSqlId = "";                                      // 需要拦截的id(支持正则匹配)
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
         // 进行包装
         MetaObject metaStatementHandler = MetaObject.forObject(statementHandler, DEFAULT_OBJECT_FACTORY,
-            DEFAULT_OBJECT_WRAPPER_FACTORY);
+                DEFAULT_OBJECT_WRAPPER_FACTORY);
 
         // 分离代理对象链(由于目标类可能被多个拦截器拦截,从而形成多次代理,通过下面的两次循环可以分离出最原始的的目标类)
         while (metaStatementHandler.hasGetter("h")) {
@@ -114,7 +119,7 @@ public class PageInterceptor implements Interceptor {
 
     /**
      * 获取总记录数
-     * 
+     *
      * @param sql
      * @param connection
      * @param mappedStatement
@@ -131,7 +136,7 @@ public class PageInterceptor implements Interceptor {
             countStmt = connection.prepareStatement(countSql);
 
             BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,
-                boundSql.getParameterMappings(), boundSql.getParameterObject());
+                    boundSql.getParameterMappings(), boundSql.getParameterObject());
             try {
                 // 利用反射为countBS添加额外参数
                 Field f = boundSql.getClass().getDeclaredField("additionalParameters");
@@ -159,14 +164,14 @@ public class PageInterceptor implements Interceptor {
             logger.error("Ignore this exception", e);
         } finally {
             try {
-                if(null != rs) {
+                if (null != rs) {
                     rs.close();
                 }
             } catch (SQLException e) {
                 logger.error("Ignore this exception", e);
             }
             try {
-                if(null != countStmt) {
+                if (null != countStmt) {
                     countStmt.close();
                 }
             } catch (SQLException e) {
@@ -178,22 +183,22 @@ public class PageInterceptor implements Interceptor {
 
     /**
      * 对SQL参数(?)设值
-     * 
+     *
      * @param ps
      * @param mappedStatement
      * @param boundSql
      * @throws SQLException
      */
     private void setParameters(PreparedStatement ps, MappedStatement mappedStatement, BoundSql boundSql)
-                                                                                                        throws SQLException {
+            throws SQLException {
         ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, boundSql.getParameterObject(),
-            boundSql);
+                boundSql);
         parameterHandler.setParameters(ps);
     }
 
     /**
      * 根据数据库类型，生成特定的分页sql
-     * 
+     *
      * @param sql
      * @param page
      * @return
@@ -219,7 +224,7 @@ public class PageInterceptor implements Interceptor {
 
     /**
      * mysql的分页语句
-     * 
+     *
      * @param sql
      * @param page
      * @return String

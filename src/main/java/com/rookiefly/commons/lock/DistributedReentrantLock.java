@@ -1,9 +1,9 @@
 package com.rookiefly.commons.lock;
 
+import org.apache.zookeeper.KeeperException;
+
 import java.text.MessageFormat;
 import java.util.concurrent.locks.ReentrantLock;
-
-import org.apache.zookeeper.KeeperException;
 
 /**
  * 多进程+多线程分布式锁

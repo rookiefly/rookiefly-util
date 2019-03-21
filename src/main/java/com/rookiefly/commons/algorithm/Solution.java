@@ -235,6 +235,7 @@ public class Solution {
 
     /**
      * 快速排序
+     *
      * @param arr
      */
     public static void quickSort(int[] arr) {
@@ -742,6 +743,7 @@ public class Solution {
     /**
      * 回文链表
      * O(1) extra space
+     *
      * @param head
      * @return
      */
@@ -867,6 +869,7 @@ public class Solution {
 
     /**
      * 朋友圈个数，广度优先搜素
+     *
      * @param m
      * @return
      */

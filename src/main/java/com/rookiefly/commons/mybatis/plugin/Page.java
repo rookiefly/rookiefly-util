@@ -6,25 +6,25 @@ import java.util.List;
 
 /**
  * 分页查询结果对象
- * 
+ *
  * @author rookiefly
  */
 public class Page<T> implements Serializable {
 
-    private static final long serialVersionUID  = 1L;
+    private static final long serialVersionUID = 1L;
 
-    public static final int   DEFAULT_PAGE_SIZE = 20;
+    public static final int DEFAULT_PAGE_SIZE = 20;
 
-    public static final int   DEFAULT_PAGE      = 1;
+    public static final int DEFAULT_PAGE = 1;
 
-    private int               pageSize;                              // 每页大小
-    private int               currentPage;                           // 当前页
-    private int               prePage;                               // 前一页
-    private int               nextPage;                              // 下一页
-    private int               totalPage;                             // 总页数
-    private int               totalCount;                            // 总记录数
+    private int pageSize;                              // 每页大小
+    private int currentPage;                           // 当前页
+    private int prePage;                               // 前一页
+    private int nextPage;                              // 下一页
+    private int totalPage;                             // 总页数
+    private int totalCount;                            // 总记录数
 
-    private List<T>           records           = new ArrayList<T>(); // 记录
+    private List<T> records = new ArrayList<T>(); // 记录
 
     public Page() {
         this.currentPage = 1;
@@ -89,7 +89,7 @@ public class Page<T> implements Serializable {
 
     /**
      * 设置总记录数
-     * 
+     *
      * @param totalCount
      */
     public void setTotalCount(int totalCount) {
@@ -103,12 +103,12 @@ public class Page<T> implements Serializable {
     @Override
     public String toString() {
         return "Page [currentPage=" + currentPage + ", pageSize=" + pageSize + ", totalPage=" + totalPage
-               + ", totalCount=" + totalCount + "]";
+                + ", totalCount=" + totalCount + "]";
     }
 
     /**
      * 是否还有下一页
-     * 
+     *
      * @return
      */
     public boolean hasNextPage() {
@@ -117,7 +117,7 @@ public class Page<T> implements Serializable {
 
     /**
      * 是否还有上一页
-     * 
+     *
      * @return
      */
     public boolean hasPrePage() {
@@ -126,7 +126,7 @@ public class Page<T> implements Serializable {
 
     /**
      * 获取当前记录数
-     * 
+     *
      * @return
      */
     public int getRecordCount() {

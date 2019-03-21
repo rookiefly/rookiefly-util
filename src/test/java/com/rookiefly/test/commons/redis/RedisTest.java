@@ -21,7 +21,7 @@ public class RedisTest {
     }
 
     @Test
-    public void testGetSet(){
+    public void testGetSet() {
         RedisServiceImpl redisService = new RedisServiceImpl();
         redisService.setRedisAddr("127.0.0.1:19000");
         redisService.init();

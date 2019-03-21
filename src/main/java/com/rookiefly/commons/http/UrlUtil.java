@@ -2,8 +2,6 @@ package com.rookiefly.commons.http;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -58,7 +56,7 @@ public class UrlUtil {
         //String requestUrl = "http://10.0.53.73:8089/crm/home/index.htm?jsessionid=7799D1D46D9CF1E5155DA7BCD8E64CA6#";
         String requestUrl = "dubbo%3A%2F%2F192.168.56.1%3A20880%2Fcom.alibaba.dubbo.demo.DemoService%3Fanyhost%3Dtrue%26application%3Ddemo-provider%26dubbo%3D2.5.3%26interface%3Dcom.alibaba.dubbo.demo.DemoService%26loadbalance%3Droundrobin%26methods%3DsayHello%26pid%3D5764%26revision%3D2.5.3%26side%3Dprovider%26timestamp%3D1438137947891";
         System.out.println(new URL(requestUrl).toString());
-        requestUrl = URLDecoder.decode(requestUrl,"utf-8");
+        requestUrl = URLDecoder.decode(requestUrl, "utf-8");
         System.out.println(requestUrl);
         String query = UrlUtil.getQuery(requestUrl);
         System.out.println(query);

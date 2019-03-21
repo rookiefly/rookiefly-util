@@ -2,8 +2,8 @@ package com.rookiefly.commons.excel;
 
 /**
  * 用来存储Excel标题的对象，通过该对象可以获取标题和方法的对应关系
- * @author wanggaoxiang
  *
+ * @author wanggaoxiang
  */
 public class ExcelHeader implements Comparable<ExcelHeader> {
     /**
@@ -13,7 +13,7 @@ public class ExcelHeader implements Comparable<ExcelHeader> {
     /**
      * 每一个标题的顺序
      */
-    private int    order;
+    private int order;
     /**
      * 说对应方法名称
      */

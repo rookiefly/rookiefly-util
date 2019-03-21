@@ -1,41 +1,30 @@
 package com.rookiefly.commons.imagetool;
 
-import java.awt.AWTException;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Robot;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-
 public class ScreenCapture extends JFrame implements MouseListener, MouseMotionListener {
-    private static final long         serialVersionUID = 1L;
-    public static final ScreenCapture capture          = new ScreenCapture();
-    JPanel                            image_panel;
-    Dimension                         screen_size;
-    ScreenCaptureListener             mainListener;
-    Image                             background_image = null;
-    Robot                             robot;
-    TipPanel                          tipPanel         = new TipPanel(this);
-    JLabel                            captureLabel     = new JLabel();
-    JLabel[]                          posLabel         = new JLabel[8];
+    private static final long serialVersionUID = 1L;
+    public static final ScreenCapture capture = new ScreenCapture();
+    JPanel image_panel;
+    Dimension screen_size;
+    ScreenCaptureListener mainListener;
+    Image background_image = null;
+    Robot robot;
+    TipPanel tipPanel = new TipPanel(this);
+    JLabel captureLabel = new JLabel();
+    JLabel[] posLabel = new JLabel[8];
 
-    int                               mouseFlag        = 0;
-    int                               posLabelIndex;
-    Point                             startPt;
-    Point                             endPt;
+    int mouseFlag = 0;
+    int posLabelIndex;
+    Point startPt;
+    Point endPt;
 
     public static ScreenCapture getInstance(ScreenCaptureListener mainListener) {
         capture.mainListener = mainListener;

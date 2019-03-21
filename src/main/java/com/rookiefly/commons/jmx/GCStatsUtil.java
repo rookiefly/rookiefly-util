@@ -61,7 +61,7 @@ public class GCStatsUtil {
     }
 
     public static void main(String[] args) {
-        List <String> buffer = new ArrayList<>();
+        List<String> buffer = new ArrayList<>();
 
         for (int i = 0; i < 1000; i++) {
             buffer.add("String" + i);

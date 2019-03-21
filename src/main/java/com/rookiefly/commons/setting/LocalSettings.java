@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * 本地配置工具类,可以实现在不用重启服务的情况下更改本地配置(通过配置文件)
  *
  * @author rookiefly
- *         <p/>
+ * <p/>
  */
 public class LocalSettings {
     private static Logger logger = Logger

@@ -1,22 +1,21 @@
 package com.rookiefly.commons.servlet;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  * 文件上传的工具类
- * 
+ *
  * @author wanggaoxiang
  * @version $Id: FileUploadUtils.java, v 0.1 2015年3月19日 下午3:36:02 wanggaoxiang<p>
  */
 public class FileUploadUtils {
     //默认大小 50M
-    public static final long   DEFAULT_MAX_SIZE = 52428800;
+    public static final long DEFAULT_MAX_SIZE = 52428800;
     //默认上传的地址
     public static final String DEFAULT_BASE_DIR = "upload";
     //默认的本地目录
@@ -24,11 +23,9 @@ public class FileUploadUtils {
 
     /**
      * 上传文件到本地绝对目录
-     * 
-     * @param file 
-     *              上传文件
-     * @param localDir 
-     *              本地绝对目录
+     *
+     * @param file     上传文件
+     * @param localDir 本地绝对目录
      * @return
      * @throws Exception
      */
@@ -41,15 +38,13 @@ public class FileUploadUtils {
         file.transferTo(localFile);
         return filename;
     }
-    
+
     /**
      * 上传文件到web项目根目录的相对目录
-     * 
+     *
      * @param request
-     * @param file 
-     *              上传文件
-     * @param baseDir 
-     *              web项目根目录
+     * @param file    上传文件
+     * @param baseDir web项目根目录
      * @return
      * @throws Exception
      */
@@ -64,8 +59,6 @@ public class FileUploadUtils {
     }
 
     /**
-     * 
-     * 
      * @param uploadDir
      * @param filename
      * @return
@@ -89,8 +82,6 @@ public class FileUploadUtils {
     }
 
     /**
-     * 
-     * 
      * @param file
      * @param baseDir
      * @return
@@ -107,8 +98,6 @@ public class FileUploadUtils {
     }
 
     /**
-     * 
-     * 
      * @param request
      * @return
      */

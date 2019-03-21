@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * 大顶堆
- *
  */
 public class MaxHeap<T extends Comparable<T>> {
     private List<T> mHeap; // 存放元素的动态数组

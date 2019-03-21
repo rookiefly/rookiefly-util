@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 /**
  * 手机工具类
- *
  */
 public class MobileUtil {
 
