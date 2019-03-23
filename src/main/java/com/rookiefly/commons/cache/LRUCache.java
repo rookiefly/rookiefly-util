@@ -1,4 +1,4 @@
-package com.rookiefly.commons.algorithm;
+package com.rookiefly.commons.cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
