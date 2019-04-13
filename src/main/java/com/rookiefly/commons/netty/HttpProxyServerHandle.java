@@ -53,7 +53,7 @@ public class HttpProxyServerHandle extends ChannelInboundHandlerAdapter {
                     .channel(ctx.channel().getClass()) // 使用NioSocketChannel来作为连接用的channel类
                     .handler(new HttpProxyInitializer(ctx.channel()));
 
-            ChannelFuture cf = bootstrap.connect(host, port);
+            cf = bootstrap.connect(host, port);
             cf.addListener((ChannelFutureListener) future -> {
                 if (future.isSuccess()) {
                     future.channel().writeAndFlush(msg);
@@ -62,7 +62,13 @@ public class HttpProxyServerHandle extends ChannelInboundHandlerAdapter {
                 }
             });
         } else if (msg instanceof HttpContent) {
-            if (status == 2) {
+            if (status != 2) {
+                if (cf != null) {
+                    cf.channel().writeAndFlush(msg);
+                } else {
+                    ReferenceCountUtil.release(msg);
+                }
+            } else {
                 ReferenceCountUtil.release(msg);
                 status = 1;
             }
@@ -85,13 +91,11 @@ public class HttpProxyServerHandle extends ChannelInboundHandlerAdapter {
                             }
                         });
                 cf = bootstrap.connect(host, port);
-                cf.addListener(new ChannelFutureListener() {
-                    public void operationComplete(ChannelFuture future) throws Exception {
-                        if (future.isSuccess()) {
-                            future.channel().writeAndFlush(msg);
-                        } else {
-                            ctx.channel().close();
-                        }
+                cf.addListener((ChannelFutureListener) future -> {
+                    if (future.isSuccess()) {
+                        future.channel().writeAndFlush(msg);
+                    } else {
+                        ctx.channel().close();
                     }
                 });
             } else {

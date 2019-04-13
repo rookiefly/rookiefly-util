@@ -26,7 +26,7 @@ public class HttpProxyClientHandle extends ChannelInboundHandlerAdapter {
             HttpResponse response = (HttpResponse) msg;
             //修改http响应体返回至客户端
             response.headers().add("test", "from proxy");
-            clientChannel.writeAndFlush(msg);
         }
+        clientChannel.writeAndFlush(msg);
     }
 }
