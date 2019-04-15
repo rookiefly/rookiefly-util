@@ -3,7 +3,7 @@ package com.rookiefly.commons.qlexpress;
 import com.ql.util.express.DefaultContext;
 import com.ql.util.express.ExpressRunner;
 
-public class QLExpressTest {
+public class QLExpressDemo {
 
     public static void main(String[] args) throws Exception {
         ExpressRunner runner = new ExpressRunner();
