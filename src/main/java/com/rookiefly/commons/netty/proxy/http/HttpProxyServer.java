@@ -1,4 +1,4 @@
-package com.rookiefly.commons.netty;
+package com.rookiefly.commons.netty.proxy.http;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;

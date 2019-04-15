@@ -1,4 +1,4 @@
-package com.rookiefly.commons.netty;
+package com.rookiefly.commons.netty.telnet;
 
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;

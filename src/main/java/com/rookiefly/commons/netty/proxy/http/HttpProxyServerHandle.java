@@ -1,6 +1,6 @@
-package com.rookiefly.commons.netty;
+package com.rookiefly.commons.netty.proxy.http;
 
-import com.rookiefly.commons.netty.ProtoUtil.RequestProto;
+import com.rookiefly.commons.netty.proxy.http.ProtoUtil.RequestProto;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
