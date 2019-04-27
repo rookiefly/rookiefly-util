@@ -38,7 +38,7 @@ public class LinkList {
      * 逆序输出链表的所有内容
      */
     public void reverseLinkList() {
-        if (head == null || head.getNext() == null) {
+        if (head.getNext() == null || head.getNext().getNext() == null) {
             //当链表只有一个头节点或者只有一个结点，逆序还是原来的链表，所以直接返回
             return;
         } else {

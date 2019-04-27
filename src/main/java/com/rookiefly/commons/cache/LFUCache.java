@@ -12,20 +12,20 @@ import java.util.Map;
  */
 public class LFUCache<K, V> {
 
-    private final int capcity;
+    private final int capacity;
 
-    private Map<K, V> cache = new HashMap<>();
+    private final Map<K, V> cache = new HashMap<>();
 
-    private Map<K, HitRate> count = new HashMap<>();
+    private final Map<K, HitRate> count = new HashMap<>();
 
-    public LFUCache(int capcity) {
-        this.capcity = capcity;
+    public LFUCache(int capacity) {
+        this.capacity = capacity;
     }
 
     public void put(K key, V value) {
         V v = cache.get(key);
         if (v == null) {
-            if (cache.size() == capcity) {
+            if (cache.size() == capacity) {
                 removeElement();
             }
             count.put(key, new HitRate(key, 1, System.nanoTime()));

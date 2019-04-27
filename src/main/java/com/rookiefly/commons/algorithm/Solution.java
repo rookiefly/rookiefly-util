@@ -824,6 +824,11 @@ public class Solution {
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
 
+    /**
+     * 斐波那契数列，递推实现
+     * @param n
+     * @return
+     */
     public static int fibonacci2(int n) {
         if (n < 3) {
             return 1;
