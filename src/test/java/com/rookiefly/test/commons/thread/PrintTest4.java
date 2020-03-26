@@ -1,18 +1,15 @@
-package com.rookiefly.commons.thread;
+package com.rookiefly.test.commons.thread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 三个线程顺序打印A、B、C十次
  */
-public class PrintTest {
+public class PrintTest4 {
 
-    private static volatile int status = 0;
-
-    private static Lock lock = new ReentrantLock();
+    private static AtomicInteger status = new AtomicInteger();
 
     public static void main(String[] args) {
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
@@ -31,18 +28,16 @@ public class PrintTest {
         @Override
         public void run() {
             for (int i = 0; i < 10; ) {
-                lock.lock();
-                if (status % 3 == 0) {
+                if (status.get() % 3 == 0) {
                     System.out.println("A");
                     try {
                         Thread.currentThread().sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    status++;
+                    status.incrementAndGet();
                     i++;
                 }
-                lock.unlock();
             }
         }
     }
@@ -52,18 +47,16 @@ public class PrintTest {
         @Override
         public void run() {
             for (int i = 0; i < 10; ) {
-                lock.lock();
-                if (status % 3 == 1) {
+                if (status.get() % 3 == 1) {
                     System.out.println("B");
                     try {
                         Thread.currentThread().sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    status++;
+                    status.incrementAndGet();
                     i++;
                 }
-                lock.unlock();
             }
         }
     }
@@ -73,18 +66,16 @@ public class PrintTest {
         @Override
         public void run() {
             for (int i = 0; i < 10; ) {
-                lock.lock();
-                if (status % 3 == 2) {
+                if (status.get() % 3 == 2) {
                     System.out.println("C");
                     try {
                         Thread.currentThread().sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    status++;
+                    status.incrementAndGet();
                     i++;
                 }
-                lock.unlock();
             }
         }
     }

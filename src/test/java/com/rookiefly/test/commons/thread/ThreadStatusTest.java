@@ -1,4 +1,4 @@
-package com.rookiefly.commons.thread;
+package com.rookiefly.test.commons.thread;
 
 public class ThreadStatusTest {
 

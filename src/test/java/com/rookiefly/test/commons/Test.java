@@ -17,6 +17,10 @@ public class Test {
         }
         System.out.println("bytes 大小：" + bytes.length);
         System.out.println("bytes1大小：" + bytes1.length);
+        int j, i = 0;
+        j = i++;
+        System.out.println(i);
+        System.out.println(j);
     }
 
     public static byte[] charToByte(char c) {

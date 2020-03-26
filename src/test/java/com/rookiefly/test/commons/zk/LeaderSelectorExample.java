@@ -1,4 +1,4 @@
-package com.rookiefly.commons.zk;
+package com.rookiefly.test.commons.zk;
 
 import com.google.common.collect.Lists;
 import org.apache.curator.framework.CuratorFramework;

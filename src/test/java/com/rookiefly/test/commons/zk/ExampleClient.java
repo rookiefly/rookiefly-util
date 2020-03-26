@@ -1,4 +1,4 @@
-package com.rookiefly.commons.zk;
+package com.rookiefly.test.commons.zk;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.leader.LeaderSelector;

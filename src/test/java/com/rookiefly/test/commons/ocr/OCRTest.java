@@ -1,4 +1,4 @@
-package com.rookiefly.commons.ocr;
+package com.rookiefly.test.commons.ocr;
 
 import net.sourceforge.tess4j.Tesseract;
 
@@ -6,13 +6,13 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
-public class OCR {
+public class OCRTest {
     /**
      * @param srImage 图片路径
      * @param ZH_CN   是否使用中文训练库,true-是
      * @return 识别结果
      */
-    public static String FindOCR(String srImage, boolean ZH_CN) {
+    public static String findOCR(String srImage, boolean ZH_CN) {
         try {
             double start = System.currentTimeMillis();
             InputStream inputStream = ClassLoader.getSystemResourceAsStream(srImage);
@@ -38,7 +38,7 @@ public class OCR {
     }
 
     public static void main(String[] args) {
-        String result = FindOCR("test1.png", false);
+        String result = findOCR("test1.png", false);
         System.out.println(result);
     }
 }

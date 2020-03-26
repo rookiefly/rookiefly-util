@@ -1,6 +1,7 @@
-package com.rookiefly.commons.collection;
+package com.rookiefly.test.commons.collection;
 
 import com.github.jsonzou.jmockdata.JMockData;
+import com.rookiefly.commons.collection.UserActivity;
 
 import java.util.PriorityQueue;
 
