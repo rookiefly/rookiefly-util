@@ -1,14 +1,11 @@
 package com.rookiefly.test.commons.poi;
 
-import com.rookiefly.commons.excel.ExcelResources;
-
 public class Student {
     private int id;
     private String name;
     private String no;
     private String sex;
 
-    @ExcelResources(title = "学生标识", order = 1)
     public int getId() {
         return id;
     }
@@ -17,7 +14,6 @@ public class Student {
         this.id = id;
     }
 
-    @ExcelResources(title = "学生姓名")
     public String getName() {
         return name;
     }
@@ -26,7 +22,6 @@ public class Student {
         this.name = name;
     }
 
-    @ExcelResources(title = "学生学号", order = 2)
     public String getNo() {
         return no;
     }
@@ -35,7 +30,6 @@ public class Student {
         this.no = no;
     }
 
-    @ExcelResources(title = "学生性别")
     public String getSex() {
         return sex;
     }

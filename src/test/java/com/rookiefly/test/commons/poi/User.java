@@ -1,7 +1,5 @@
 package com.rookiefly.test.commons.poi;
 
-import com.rookiefly.commons.excel.ExcelResources;
-
 public class User {
 
     private int id;
@@ -9,7 +7,6 @@ public class User {
     private String nickname;
     private int age;
 
-    @ExcelResources(title = "用户标识", order = 1)
     public int getId() {
         return id;
     }
@@ -18,7 +15,6 @@ public class User {
         this.id = id;
     }
 
-    @ExcelResources(title = "用户名", order = 2)
     public String getUsername() {
         return username;
     }
@@ -27,7 +23,6 @@ public class User {
         this.username = username;
     }
 
-    @ExcelResources(title = "用户昵称", order = 3)
     public String getNickname() {
         return nickname;
     }
@@ -36,7 +31,6 @@ public class User {
         this.nickname = nickname;
     }
 
-    @ExcelResources(title = "用户年龄", order = 4)
     public int getAge() {
         return age;
     }

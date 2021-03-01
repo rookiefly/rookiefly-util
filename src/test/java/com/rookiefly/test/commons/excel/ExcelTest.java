@@ -1,7 +1,5 @@
 package com.rookiefly.test.commons.excel;
 
-import com.rookiefly.commons.excel.ExcelUtil;
-
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -21,8 +19,6 @@ public class ExcelTest {
         dataset.add(new Student(30000003, "王五", 22, true, new Date()));
 
         OutputStream out = new FileOutputStream("student.xls");
-        //ex.exportExcel(title, headers, dataset, out);
-        ExcelUtil.getInstance().exportObj2Excel(out, dataset, Student.class, false);
     }
 
 }

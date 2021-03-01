@@ -1,7 +1,5 @@
 package com.rookiefly.test.commons.excel;
 
-import com.rookiefly.commons.excel.ExcelResources;
-
 import java.util.Date;
 
 public class Student {
@@ -25,7 +23,6 @@ public class Student {
         this.birthday = birthday;
     }
 
-    @ExcelResources(title = "学生ID", order = 10)
     public long getId() {
         return id;
     }
@@ -34,7 +31,6 @@ public class Student {
         this.id = id;
     }
 
-    @ExcelResources(title = "学生姓名", order = 9)
     public String getName() {
         return name;
     }
@@ -43,7 +39,6 @@ public class Student {
         this.name = name;
     }
 
-    @ExcelResources(title = "学生年龄", order = 8)
     public int getAge() {
         return age;
     }

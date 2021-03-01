@@ -1,7 +1,5 @@
 package com.rookiefly.test.commons.poi;
 
-import com.rookiefly.commons.excel.ExcelTemplate;
-import com.rookiefly.commons.excel.ExcelUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Test;
 
