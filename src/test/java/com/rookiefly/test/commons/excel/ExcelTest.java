@@ -1,5 +1,9 @@
 package com.rookiefly.test.commons.excel;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -19,6 +23,12 @@ public class ExcelTest {
         dataset.add(new Student(30000003, "王五", 22, true, new Date()));
 
         OutputStream out = new FileOutputStream("student.xls");
+
+        ExportParams exportParams = new ExportParams();
+        exportParams.setSheetName("学生信息");
+        Workbook workbook = ExcelExportUtil.exportExcel(exportParams, Student.class, dataset);
+
+        workbook.write(out);
     }
 
 }
