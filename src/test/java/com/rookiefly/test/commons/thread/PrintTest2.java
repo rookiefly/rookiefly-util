@@ -10,15 +10,12 @@ import java.util.concurrent.Semaphore;
 public class PrintTest2 {
 
     private static Semaphore A = new Semaphore(1);
-    private static Semaphore B = new Semaphore(1);
-    private static Semaphore C = new Semaphore(1);
+    private static Semaphore B = new Semaphore(0);
+    private static Semaphore C = new Semaphore(0);
 
     public static void main(String[] args) throws InterruptedException {
 
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
-
-        B.acquire();
-        C.acquire();
 
         threadPool.execute(new PrintAThread());
 
