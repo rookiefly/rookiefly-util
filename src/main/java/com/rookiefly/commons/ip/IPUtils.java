@@ -1,60 +1,28 @@
 package com.rookiefly.commons.ip;
 
-import com.rookiefly.commons.json.JsonUtil;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.lionsoul.ip2region.DataBlock;
+import org.lionsoul.ip2region.DbConfig;
+import org.lionsoul.ip2region.DbSearcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
 
 public class IPUtils {
 
-    private static final String TAOBAO_IP_REST_API = "http://ip.taobao.com/service/getIpInfo.php?ip=%s";
-
-    public static String getCityString(String ipAddress) {
-        String result = null;
-        try {
-            URL url = new URL(String.format(TAOBAO_IP_REST_API, ipAddress));
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = httpURLConnection.getInputStream();
-            result = IOUtils.toString(inputStream);
-            inputStream.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    public static Map<String, String> getCityMapResult(String ipAddress) {
-        Map<String, String> dataMap = null;
-        String result = getCityString(ipAddress);
-        if (StringUtils.isNotBlank(result)) {
-            Map<String, Object> mapResult = JsonUtil.readMap(result);
-            dataMap = (Map<String, String>) mapResult.get("data");
-        }
-        return dataMap;
-    }
-
-    public static String getCityName(String ipAddress) {
-        Map<String, String> dataMap = getCityMapResult(ipAddress);
-        if (dataMap != null) {
-            return dataMap.get("city");
-        }
-        return null;
+    public static String getCityName(String ipAddress) throws Exception {
+        DbConfig config = new DbConfig();
+        DbSearcher searcher = new DbSearcher(config, ClassLoader.getSystemResource("ip2region.db").getFile());
+        DataBlock dataBlock = searcher.btreeSearch(ipAddress);
+        return dataBlock.getRegion().split("\\|")[3];
     }
 
     public static boolean ipIsInNet(String iparea, String ip) {
-        if (iparea == null)
+        if (iparea == null) {
             throw new NullPointerException("IP段不能为空！");
-        if (ip == null)
+        }
+        if (ip == null) {
             throw new NullPointerException("IP不能为空！");
+        }
         iparea = iparea.trim();
         ip = ip.trim();
         final String REGX_IP = "((25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)";

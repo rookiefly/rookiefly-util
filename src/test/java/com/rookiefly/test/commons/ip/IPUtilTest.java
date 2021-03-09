@@ -15,10 +15,10 @@ import java.util.Scanner;
 public class IPUtilTest {
 
     @Test
-    public void test01() {
+    public void test01() throws Exception {
         String ipAddress = "115.236.20.7";
         String city = IPUtils.getCityName(ipAddress);
-        Assert.assertEquals("", "杭州市", city);
+        Assert.assertEquals("", "杭州", city);
     }
 
     @Test
