@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by rookiefly on 2015/12/1.
  */
-public class JsonTest {
+public class JsonUtilTest {
 
     @Test
     public void test01() {

@@ -1,27 +1,14 @@
 package com.rookiefly.commons.json;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-import org.codehaus.jackson.type.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Administrator
- * @version $Id: JsonUtil.java, v 0.1 2015年4月16日 下午1:34:27 Administrator Exp $
- */
-@SuppressWarnings("deprecation")
 public class JsonUtil {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    static {
-        // 为保持对象版本兼容性,忽略未知的属性
-        MAPPER.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 序列化的时候，跳过null值
-        MAPPER.getSerializationConfig().setSerializationInclusion(Inclusion.NON_NULL);
-    }
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     /**
      * 将一个对象编码为json字符串
@@ -100,8 +87,7 @@ public class JsonUtil {
      * @param <T>
      * @return
      */
-    @SuppressWarnings("rawtypes")
-    public static <T> T toObject(String json, TypeReference typeReference) {
+    public static <T> T toObject(String json, TypeReference<T> typeReference) {
         try {
             return MAPPER.readValue(json, typeReference);
         } catch (Exception e) {
@@ -115,7 +101,6 @@ public class JsonUtil {
      * @param json
      * @return
      */
-    @SuppressWarnings("unchecked")
     public static Map<String, Object> readMap(String json) {
         try {
             return MAPPER.readValue(json, HashMap.class);
