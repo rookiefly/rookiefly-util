@@ -1,13 +1,19 @@
 package com.rookiefly.commons.ip;
 
+import com.ejlchina.okhttps.OkHttps;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-public class IPUtils {
+public class IpUtils {
+
+    public static List<String> CHECK_IP_SERVER_LIST = Lists.newArrayList("https://checkip.amazonaws.com",
+            "http://icanhazip.com", "http://ip.cip.cc");
 
     public static String getCityName(String ipAddress) throws Exception {
         DbConfig config = new DbConfig();
@@ -107,14 +113,13 @@ public class IPUtils {
         return ipaddr;
     }
 
-    public static void main(String[] args) {
-        String ipStr = "192.168.0.1";
-        long longIp = ipToLong(ipStr);
-        System.out.println("192.168.0.1 的整数形式为：" + longIp);
-        System.out.println("整数" + longIp + "转化成字符串IP地址："
-                + longToIP(longIp));
-        //ip地址转化成二进制形式输出
-        System.out.println("192.168.0.1 的二进制形式为：" + Long.toBinaryString(longIp));
-
+    public static String getExternalIp() {
+        for (String url : CHECK_IP_SERVER_LIST) {
+            String ip = OkHttps.sync(url).get().getBody().toString();
+            if (StringUtils.isNotBlank(ip)) {
+                return ip;
+            }
+        }
+        return "";
     }
 }
