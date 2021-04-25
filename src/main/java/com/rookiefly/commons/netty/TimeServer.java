@@ -10,6 +10,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class TimeServer {
+
     public void bind(int port) throws Exception {
         // 配置服务端的NIO线程组
         //用于网络事件处理

@@ -9,7 +9,7 @@ public class AsyncTest {
         System.out.println("main done...");
     }
 
-    public static void async(){
+    public static void async() {
         CompletableFuture.runAsync(() -> {
             System.out.println("read db...");
             try {

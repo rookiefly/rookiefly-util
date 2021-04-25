@@ -48,7 +48,7 @@ public class QLExpressTest {
     public void testFunction() throws Exception {
         ExpressRunner runner = new ExpressRunner();
         DefaultContext<String, Object> context = new DefaultContext<String, Object>();
-        runner.addFunction("join",new JoinFunction());
+        runner.addFunction("join", new JoinFunction());
         Object r = runner.execute("join(1,2,3)", context, null, false, false);
         System.out.println(r);
     }

@@ -75,8 +75,7 @@ public class VerifyCodeUtils {
     /**
      * 使用系统默认字符源生成验证码
      *
-     * @param verifySize
-     *            验证码长度
+     * @param verifySize 验证码长度
      * @return
      */
     private static String generateVerifyCode(int verifySize) {
