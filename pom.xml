@@ -16,7 +16,7 @@
         <jackson.version>2.12.1</jackson.version>
         <log4j.version>2.13.1</log4j.version>
         <fastjson.version>1.2.67</fastjson.version>
-        <mybatis.version>3.5.4</mybatis.version>
+        <mybatis.version>3.5.7</mybatis.version>
         <spring.version>5.1.5.RELEASE</spring.version>
         <easypoi.version>4.3.0</easypoi.version>
         <ant.version>1.10.9</ant.version>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -95,7 +95,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>2.8.0</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -172,7 +172,7 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.2.2</version>
+            <version>2.3.2</version>
         </dependency>
 
         <dependency>
