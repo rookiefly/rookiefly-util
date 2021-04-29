@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class LockFreeQueue {
 
-    private AtomicReferenceArray atomicReferenceArray;
+    private AtomicReferenceArray<Integer> atomicReferenceArray;
     //代表为空，没有元素
     private static final Integer EMPTY = null;
     //头指针,尾指针
@@ -18,7 +18,7 @@ public class LockFreeQueue {
 
 
     public LockFreeQueue(int size) {
-        atomicReferenceArray = new AtomicReferenceArray(new Integer[size + 1]);
+        atomicReferenceArray = new AtomicReferenceArray<>(new Integer[size + 1]);
         head = new AtomicInteger(0);
         tail = new AtomicInteger(0);
     }
@@ -54,7 +54,7 @@ public class LockFreeQueue {
             return null;
         }
         int index = (head.get() + 1) % atomicReferenceArray.length();
-        Integer ele = (Integer) atomicReferenceArray.get(index);
+        Integer ele = atomicReferenceArray.get(index);
         if (ele == null) { //有可能其它线程也在出队
             return poll();
         }
@@ -67,12 +67,12 @@ public class LockFreeQueue {
     }
 
     public void print() {
-        StringBuffer buffer = new StringBuffer("[");
+        StringBuilder buffer = new StringBuilder("[");
         for (int i = 0; i < atomicReferenceArray.length(); i++) {
             if (i == head.get() || atomicReferenceArray.get(i) == null) {
                 continue;
             }
-            buffer.append(atomicReferenceArray.get(i) + ",");
+            buffer.append(atomicReferenceArray.get(i)).append(",");
         }
         buffer.deleteCharAt(buffer.length() - 1);
         buffer.append("]");

@@ -1,5 +1,7 @@
 package com.rookiefly.commons.algorithm;
 
+import cn.hutool.core.lang.Console;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,11 +24,13 @@ public class Solution {
         System.out.println(lengthOfLongestSubstring2("abcabcbb"));
         System.out.println(longestCommonPrefix(new String[]{"leets", "leetcode", "leet", "leets"}));
         int[] arr = {5, 4, 3, 6, 7, 4, 9};
+        Console.print(arr);
+        System.out.println();
+        bubbleSort(arr);
         //quickSort(arr);
-        insertSort(arr);
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        }
+        //insertSort(arr);
+        Console.print(arr);
+        System.out.println();
 
         int[][] test = new int[][]{
                 {1, 1, 2, 2, 3, 4, 5},
@@ -63,7 +67,8 @@ public class Solution {
         head2.next = new ListNode(5);
         head2.next.next = new ListNode(6);
         head2.next.next.next = new ListNode(7);
-
+        printListNode(head1);
+        printListNode(reverseLinkList(head1));
         printCommonPart(head1, head2);
         System.out.println(findMid(head2));
         printListNode(removeNthFromEnd(head1, 2));
@@ -111,6 +116,19 @@ public class Solution {
             node = node.next;
         }
         System.out.println();
+    }
+
+    /**
+     * 逆序输出链表的所有内容
+     */
+    public static ListNode reverseLinkList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode newHead = reverseLinkList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
     }
 
     public static class TreeNode {
