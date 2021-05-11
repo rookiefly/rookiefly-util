@@ -20,15 +20,14 @@ public class SqlFileExecutor {
      *
      * @param sqlFile SQL 脚本文件
      * @return List<sql> 返回所有 SQL 语句的 List
-     * @throws Exception
      */
-    private List<String> loadSql(String sqlFile) throws Exception {
-        List<String> sqlList = new ArrayList<String>();
+    private List<String> loadSql(String sqlFile) {
+        List<String> sqlList = new ArrayList<>();
 
         try {
             InputStream sqlFileIn = new FileInputStream(sqlFile);
 
-            StringBuffer sqlSb = new StringBuffer();
+            StringBuilder sqlSb = new StringBuilder();
             byte[] buff = new byte[1024];
             int byteRead = 0;
             while ((byteRead = sqlFileIn.read(buff)) != -1) {
@@ -45,7 +44,8 @@ public class SqlFileExecutor {
             }
             return sqlList;
         } catch (Exception ex) {
-            throw new Exception(ex.getMessage());
+            ex.printStackTrace();
+            return null;
         }
     }
 
@@ -94,7 +94,7 @@ public class SqlFileExecutor {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         List<String> sqlList = new SqlFileExecutor().loadSql(args[0]);
         System.out.println("size:" + sqlList.size());
         for (String sql : sqlList) {

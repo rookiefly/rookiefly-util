@@ -1,6 +1,7 @@
 package com.rookiefly.commons.sql;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -10,8 +11,24 @@ import java.sql.Statement;
  * @author rookiefly
  */
 public class DBCenter {
-    public static Connection getConnection() {
-        return null;
+
+    private DBCenter() {
+
+    }
+
+    static {
+        //1.加载驱动程序
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() throws SQLException {
+        //2. 获得数据库连接
+        return DriverManager.getConnection("jdbc:mysql://127.0.0.1/test?useUnicode=true&characterEncoding=utf-8",
+                "root", "123456");
     }
 
     public static void commit(Connection conn) {

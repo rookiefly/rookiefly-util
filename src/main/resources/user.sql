@@ -1,9 +1,3 @@
-drop database if exists test;
-
-create database test character set utf8;
-
-use test;
-
 create table user (
 	id varchar(255) unique,
 	username varchar(255) not null,
