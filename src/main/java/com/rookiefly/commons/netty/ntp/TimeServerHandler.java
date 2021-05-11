@@ -1,4 +1,4 @@
-package com.rookiefly.commons.netty;
+package com.rookiefly.commons.netty.ntp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

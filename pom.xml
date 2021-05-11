@@ -21,6 +21,9 @@
         <easypoi.version>4.3.0</easypoi.version>
         <ant.version>1.10.9</ant.version>
         <guava.version>30.1-jre</guava.version>
+        <curator.version>4.0.1</curator.version>
+        <netty.version>4.1.63.Final</netty.version>
+        <asm.version>3.3.1</asm.version>
     </properties>
 
     <dependencies>
@@ -245,19 +248,19 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
-            <version>4.0.1</version>
+            <version>${curator.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
-            <version>4.0.1</version>
+            <version>${curator.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-test</artifactId>
-            <version>4.0.1</version>
+            <version>${curator.version}</version>
         </dependency>
 
         <dependency>
@@ -305,7 +308,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-codec-http</artifactId>
-            <version>4.1.33.Final</version>
+            <version>${netty.version}</version>
         </dependency>
 
         <dependency>
@@ -317,18 +320,18 @@
         <dependency>
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
-            <version>3.3.1</version>
+            <version>${asm.version}</version>
         </dependency>
         <dependency>
             <groupId>asm</groupId>
             <artifactId>asm-commons</artifactId>
-            <version>3.3.1</version>
+            <version>${asm.version}</version>
         </dependency>
 
         <dependency>
             <groupId>asm</groupId>
             <artifactId>asm-util</artifactId>
-            <version>3.3.1</version>
+            <version>${asm.version}</version>
         </dependency>
 
         <dependency>

@@ -100,9 +100,7 @@ public class FairLock {
                         }
                         try {
                             zk.exists(lockName + "/" + watchNodeTmp, true);
-                        } catch (KeeperException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
+                        } catch (KeeperException | InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
@@ -115,7 +113,7 @@ public class FairLock {
 
             LockSupport.park();
 //            try {
-//                Thread.sleep(1000000000);
+//                Thread.sleep(50000);
 //            } catch (InterruptedException ex) {
 //                System.out.println(Thread.currentThread().getName() + " notify");
 //                System.out.println(Thread.currentThread().getName() + "  get Lock...");

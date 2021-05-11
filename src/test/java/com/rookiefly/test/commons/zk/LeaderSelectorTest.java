@@ -4,17 +4,37 @@ import com.google.common.collect.Lists;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.curator.test.TestingServer;
 import org.apache.curator.utils.CloseableUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class LeaderSelectorExample {
+public class LeaderSelectorTest {
+
     private static final int CLIENT_QTY = 10;
+
     private static final String PATH = "/examples/leader";
 
-    public static void main(String[] args) throws Exception {
+    private TestingServer zkTestServer;
+
+    @Before
+    public void startZookeeper() throws Exception {
+        zkTestServer = new TestingServer(2181);
+    }
+
+    @After
+    public void stopZookeeper() throws IOException {
+        zkTestServer.stop();
+    }
+
+    @Test
+    public void testSelectLeader() {
         List<CuratorFramework> clients = Lists.newArrayList();
         List<ExampleClient> examples = Lists.newArrayList();
         try {
@@ -29,6 +49,8 @@ public class LeaderSelectorExample {
 
             System.out.println("Press enter/return to quit\n");
             new BufferedReader(new InputStreamReader(System.in)).readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             System.out.println("Shutting down...");
             for (ExampleClient exampleClient : examples) {

@@ -33,7 +33,7 @@ public class SingleReactorNIOServer {
                     SocketChannel socketChannel = acceptServerSocketChannel.accept();
                     socketChannel.configureBlocking(false);
                     System.out.println("Accept request from " + socketChannel.getRemoteAddress());
-                    SingleReactorProcessor processor = processors[(int) ((index++) % coreNum)];
+                    SingleReactorProcessor processor = processors[(index++) % coreNum];
                     processor.addChannel(socketChannel);
                     processor.wakeup();
                 }
