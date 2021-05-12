@@ -1,5 +1,7 @@
 package com.rookiefly.commons.idcard;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class IDCardUtils {
 
     /**
@@ -339,7 +342,7 @@ public class IDCardUtils {
 
     public static void main(String[] args) {
         String idcard18 = "41272619901005053X";// 18位
-        System.out.println(IDCardUtils.isValidate18Idcard(idcard18));
+        log.info(String.valueOf(IDCardUtils.isValidate18Idcard(idcard18)));
     }
 
 }

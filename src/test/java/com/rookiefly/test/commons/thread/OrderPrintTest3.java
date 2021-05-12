@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class PrintTest3 {
+public class OrderPrintTest3 {
     private static Lock lock = new ReentrantLock();
     private static int count = 0;
     private static Condition A = lock.newCondition();

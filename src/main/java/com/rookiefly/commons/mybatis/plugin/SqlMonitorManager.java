@@ -11,7 +11,8 @@ import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -28,7 +29,7 @@ import java.util.Properties;
                 RowBounds.class, ResultHandler.class,
                 CacheKey.class, BoundSql.class})})
 public class SqlMonitorManager implements Interceptor {
-    private static final Logger sqlStatLogger = Logger.getLogger("mysqlStatLogger");
+    private static final Logger sqlStatLogger = LoggerFactory.getLogger("mysqlStatLogger");
     private boolean showSql = true;
 
     @Override
@@ -43,7 +44,7 @@ public class SqlMonitorManager implements Interceptor {
         }
 
         String sqlId = mappedStatement.getId();
-        Object returnValue = null;
+        Object returnValue;
         int resultCode = 0;
         long start = System.currentTimeMillis();
         try {
@@ -54,7 +55,8 @@ public class SqlMonitorManager implements Interceptor {
         } finally {
             long end = System.currentTimeMillis();
             long time = end - start;
-            sqlStatLogger.info(sqlId + "," + resultCode + "," + time);
+            Object parameterObject = invocation.getArgs()[1];
+            sqlStatLogger.info("{}, [{}], {}, {}", sqlId, mappedStatement.getBoundSql(parameterObject).getSql(), resultCode, time);
         }
         return returnValue;
     }

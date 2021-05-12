@@ -1,15 +1,19 @@
 package com.rookiefly.test.commons.thread;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static java.lang.Thread.sleep;
 
 /**
  * @author rookiefly
  * 线程的测试
  */
-
-public class ThreadTest {
+@Slf4j
+public class CountDownLatchTest {
 
     /**
      * 5个线程的线程池
@@ -23,16 +27,13 @@ public class ThreadTest {
         countDownLatch = new CountDownLatch(4);
 
         //执行线程a任务
-        scheduler.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ThreadTest.countDownLatch.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("thread a done");
+        scheduler.execute(() -> {
+            try {
+                CountDownLatchTest.countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            log.info("thread a done");
         });
 
         scheduler.execute(new JobThread("thread b")); //执行线程b任务
@@ -55,15 +56,15 @@ public class ThreadTest {
         }
 
         public void run() {
-            System.out.println(threadName + " start");
+            log.info(threadName + " start");
             //do something
             try {
-                Thread.currentThread().sleep(8000);
+                sleep(8000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(threadName + " done");
-            ThreadTest.countDownLatch.countDown();
+            log.info(threadName + " done");
+            CountDownLatchTest.countDownLatch.countDown();
         }
     }
 }

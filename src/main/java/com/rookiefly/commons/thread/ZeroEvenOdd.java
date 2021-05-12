@@ -90,26 +90,11 @@ public class ZeroEvenOdd {
         ZeroEvenOdd zeroEvenOdd = new ZeroEvenOdd(6);
 
         ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
-        fixedThreadPool.submit(new Runnable() {
-            @Override
-            public void run() {
-                zeroEvenOdd.zero(System.out::print);
-            }
-        });
+        fixedThreadPool.submit(() -> zeroEvenOdd.zero(System.out::print));
 
-        fixedThreadPool.submit(new Runnable() {
-            @Override
-            public void run() {
-                zeroEvenOdd.even(System.out::print);
-            }
-        });
+        fixedThreadPool.submit(() -> zeroEvenOdd.even(System.out::print));
 
-        fixedThreadPool.submit(new Runnable() {
-            @Override
-            public void run() {
-                zeroEvenOdd.odd(System.out::print);
-            }
-        });
+        fixedThreadPool.submit(() -> zeroEvenOdd.odd(System.out::print));
 
         fixedThreadPool.shutdown();
     }

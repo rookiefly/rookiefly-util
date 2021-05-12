@@ -12,9 +12,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <lucene.version>7.1.0</lucene.version>
         <jackson.version>2.12.1</jackson.version>
-        <log4j.version>2.13.1</log4j.version>
         <fastjson.version>1.2.67</fastjson.version>
         <mybatis.version>3.5.7</mybatis.version>
         <spring.version>5.1.5.RELEASE</spring.version>
@@ -29,6 +30,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
@@ -233,12 +244,12 @@
             <version>2.9.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>net.sourceforge.tess4j</groupId>
-            <artifactId>tess4j</artifactId>
-            <scope>test</scope>
-            <version>4.3.1</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>net.sourceforge.tess4j</groupId>-->
+        <!--            <artifactId>tess4j</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--            <version>4.3.1</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
