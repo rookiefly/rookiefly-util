@@ -1,95 +1,96 @@
 package com.rookiefly.commons.netty.chat;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.DefaultFileRegion;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpUtil;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.LastHttpContent;
-import io.netty.handler.ssl.SslHandler;
-import io.netty.handler.stream.ChunkedNioFile;
+import io.netty.util.CharsetUtil;
 
-import java.io.File;
-import java.io.RandomAccessFile;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import static io.netty.handler.codec.http.HttpResponseStatus.OK;
+import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
-    private final String wsUri;
-    private static File INDEX;
+    private static final String INDEX = "index.html";
 
-    static {
-        URL location = HttpRequestHandler.class.getProtectionDomain().getCodeSource().getLocation();
-        try {
-            String path = location.toURI() + "index.html";
-            path = !path.contains("file:") ? path : path.substring(5);
-            INDEX = new File(path);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+    private String websocketUrl;
+
+    public HttpRequestHandler(String websocketUrl) {
+        this.websocketUrl = websocketUrl;
+    }
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
+        if (websocketUrl.equalsIgnoreCase(msg.getUri())) {
+            //如果该HTTP请求指向了websocketUrl的URL,那么直接交给下一个ChannelInboundHandler进行处理
+            ctx.fireChannelRead(msg.retain());
+        } else {
+            //生成index页面的具体内容,并送往浏览器
+            ByteBuf content = loadIndexHtml();
+            FullHttpResponse res = new DefaultFullHttpResponse(
+                    HTTP_1_1, OK, content);
+
+            res.headers().set(HttpHeaderNames.CONTENT_TYPE,
+                    "text/html; charset=UTF-8");
+            HttpUtil.setContentLength(res, content.readableBytes());
+            sendHttpResponse(ctx, msg, res);
         }
     }
 
-    public HttpRequestHandler(String wsUri) {
-        this.wsUri = wsUri;
+    public static ByteBuf loadIndexHtml() {
+        InputStreamReader isr = null;
+        BufferedReader raf = null;
+        StringBuffer content = new StringBuffer();
+        try {
+            isr = new InputStreamReader(ClassLoader.getSystemResourceAsStream(INDEX));
+            raf = new BufferedReader(isr);
+            String s = null;
+            // 读取文件内容，并将其打印
+            while ((s = raf.readLine()) != null) {
+                content.append(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                isr.close();
+                raf.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return Unpooled.copiedBuffer(content.toString().getBytes());
     }
 
-    private void send100Continue(ChannelHandlerContext ctx) {
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.CONTINUE);
-        ctx.writeAndFlush(response);
-    }
+    /*发送应答*/
+    private static void sendHttpResponse(ChannelHandlerContext ctx,
+                                         FullHttpRequest req,
+                                         FullHttpResponse res) {
+        // 错误的请求进行处理 （code<>200).
+        if (res.status().code() != 200) {
+            ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(),
+                    CharsetUtil.UTF_8);
+            res.content().writeBytes(buf);
+            buf.release();
+            HttpUtil.setContentLength(res, res.content().readableBytes());
+        }
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
-        ctx.close();
-    }
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
-        // 如果请求了Websocket，协议升级，增加引用计数(调用retain())，并将他传递给下一个 ChannelHandler
-        // 之所以需要调用 retain() 方法，是因为调用 channelRead() 之后，资源会被 release() 方法释放掉，需要调用 retain() 保留资源
-        if (wsUri.equalsIgnoreCase(request.uri())) {
-            ctx.fireChannelRead(request.retain());
-        } else {
-            //处理 100 Continue 请求以符合 HTTP 1.1 规范
-            if (HttpUtil.is100ContinueExpected(request)) {
-                send100Continue(ctx);
-            }
-            // 读取 index.html
-            RandomAccessFile randomAccessFile = new RandomAccessFile(INDEX, "r");
-            HttpResponse response = new DefaultHttpResponse(request.protocolVersion(), HttpResponseStatus.OK);
-            HttpHeaders headers = response.headers();
-            //在该 HTTP 头信息被设置以后，HttpRequestHandler 将会写回一个 HttpResponse 给客户端
-            headers.set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
-            boolean keepAlive = HttpUtil.isKeepAlive(request);
-            if (keepAlive) {
-                headers.set(HttpHeaderNames.CONTENT_LENGTH, randomAccessFile.length());
-                headers.set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
-            }
-            ctx.write(response);
-            //将 index.html 写给客户端
-            if (ctx.pipeline().get(SslHandler.class) == null) {
-                ctx.write(new DefaultFileRegion(randomAccessFile.getChannel(), 0, randomAccessFile.length()));
-            } else {
-                ctx.write(new ChunkedNioFile(randomAccessFile.getChannel()));
-            }
-            //写 LastHttpContent 并冲刷至客户端，标记响应的结束
-            ChannelFuture channelFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
-            if (!keepAlive) {
-                channelFuture.addListener(ChannelFutureListener.CLOSE);
-            }
+        // 发送应答.
+        ChannelFuture f = ctx.channel().writeAndFlush(res);
+        //对于不是长连接或者错误的请求直接关闭连接
+        if (!HttpUtil.isKeepAlive(req) || res.status().code() != 200) {
+            f.addListener(ChannelFutureListener.CLOSE);
         }
     }
 }

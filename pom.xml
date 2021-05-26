@@ -174,12 +174,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ning</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>1.9.33</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.6</version>
@@ -275,11 +269,11 @@
             <version>${curator.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
-            <version>3.10.3</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.redisson</groupId>-->
+        <!--            <artifactId>redisson</artifactId>-->
+        <!--            <version>3.10.3</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -319,8 +313,9 @@
 
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty-codec-http</artifactId>
+            <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

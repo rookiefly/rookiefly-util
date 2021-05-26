@@ -1,0 +1,426 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>基于WebSocket实现网页版群聊</title>
+</head>
+<body>
+<script type="text/javascript"> var userName = null;
+var socket;
+var myDate = new Date();
+if (!window.WebSocket) {
+    window.WebSocket = window.MozWebSocket;
+}
+if (window.WebSocket) {
+    socket = new WebSocket("ws://127.0.0.1:8761/ws");
+    socket.onmessage = function (event) {
+        var info = document.getElementById("jp-container");
+        var dataObj = event.data;
+        if (dataObj.indexOf("@") != -1) {
+            var arr = dataObj.split('@');
+            var sendUser;
+            var acceptMsg;
+            for (var i = 0; i < arr.length; i++) {
+                if (i == 0) {
+                    sendUser = arr[i];
+                } else {
+                    acceptMsg = arr[i];
+                }
+            }
+            if (userName == sendUser) {
+                return;
+            }
+            var talk = document.createElement("div");
+            talk.setAttribute("class", "talk_recordboxme");
+            talk.innerHTML = sendUser + ':';
+            var recordtext = document.createElement("div");
+            recordtext.setAttribute("class", "talk_recordtextbg");
+            talk.appendChild(recordtext);
+            var talk_recordtext = document.createElement("div");
+            talk_recordtext.setAttribute("class", " talk_recordtext");
+            var h3 = document.createElement("h3");
+            h3.innerHTML = acceptMsg;
+            talk_recordtext.appendChild(h3);
+            var span = document.createElement("span");
+            span.innerHTML = myDate.toLocaleTimeString();
+            span.setAttribute("class", "talk_time");
+            talk_recordtext.appendChild(span);
+            talk.appendChild(talk_recordtext);
+        } else {
+            var talk = document.createElement("div");
+            talk.style.textAlign = "center";
+            var font = document.createElement("font");
+            font.color = '#212121';
+            font.innerHTML = dataObj + ': ' + myDate.toLocaleString();
+            talk.appendChild(font);
+        }
+        info.appendChild(talk);
+    };
+    socket.onopen = function (event) {
+        console.log("Socket 已打开");
+    };
+    socket.onclose = function (event) {
+        console.log("Socket已关闭");
+    };
+} else {
+    alert("Your browser does not support Web Socket.");
+}
+
+function send(message) {
+    if (!window.WebSocket) {
+        return;
+    }
+    if (socket.readyState == WebSocket.OPEN) {
+        var info = document.getElementById("jp-container");
+        var talk = document.createElement("div");
+        talk.setAttribute("class", "talk_recordbox");
+        var user = document.createElement("div");
+        user.setAttribute("class", "user");
+        talk.appendChild(user);
+        var recordtext = document.createElement("div");
+        recordtext.setAttribute("class", "talk_recordtextbg");
+        talk.appendChild(recordtext);
+        var talk_recordtext = document.createElement("div");
+        talk_recordtext.setAttribute("class", " talk_recordtext");
+        var h3 = document.createElement("h3");
+        h3.innerHTML = message;
+        talk_recordtext.appendChild(h3);
+        var span = document.createElement("span");
+        span.innerHTML = myDate.toLocaleTimeString();
+        span.setAttribute("class", "talk_time");
+        talk_recordtext.appendChild(span);
+        talk.appendChild(talk_recordtext);
+        info.appendChild(talk);
+        socket.send(message);
+    } else {
+        alert("The socket is not open.");
+    }
+}
+</script>
+
+<br>
+<br>
+<div class="talk">
+    <div class="talk_title"><span>群聊</span></div>
+    <div class="talk_record" style="background: #EEEEF4;">
+        <div id="jp-container" class="jp-container">
+        </div>
+    </div>
+    <form onsubmit="return false;">
+        <div class="talk_word">
+            &nbsp;
+            <input class="add_face" id="facial" type="button" title="添加表情" value=""/>
+            <input class="messages emotion" autocomplete="off" name="message" value="在这里输入文字"
+                   onFocus="if(this.value=='在这里输入文字'){this.value='';}"
+                   onblur="if(this.value==''){this.value='在这里输入文字';}"/>
+            <input class="talk_send" type="button" title="发送" value="发送" onclick="send(this.form.message.value)"/></div>
+    </form>
+</div>
+</body>
+<style>
+    body {
+        font-family: verdana, Arial, Helvetica, "宋体", sans-serif;
+        font-size: 12px;
+    }
+
+    body, div, dl, dt, dd, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, P, blockquote, th, td, img,
+    INS {
+        margin: 0px;
+        padding: 0px;
+        border: 0;
+    }
+
+    ol {
+        list-style-type: none;
+    }
+
+    img, input {
+        border: none;
+    }
+
+    a {
+        color: #198DD0;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #ba2636;
+        text-decoration: underline;
+    }
+
+    a {
+        blr: expression(this.onFocus=this.blur())
+    }
+
+    /*去掉a标签的虚线框，避免出现奇怪的选中区域*/
+    :focus {
+        outline: 0;
+    }
+
+    .talk {
+        height: 480px;
+        width: 335px;
+        margin: 0 auto;
+        border-left-width: 1px;
+        border-left-style: solid;
+        border-left-color: #444;
+    }
+
+    .talk_title {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-indent: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #afafaf;
+        background: #212121;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: #434343;
+        font-family: "微软雅黑";
+    }
+
+    .talk_title span {
+        float: left
+    }
+
+    .talk_title_c {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .talk_record {
+        width: 100%;
+        height: 398px;
+        overflow: hidden;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: #434343;
+        margin: 0px;
+    }
+
+    .talk_word {
+        line-height: 40px;
+        height: 40px;
+        width: 100%;
+        background: #212121;
+    }
+
+    .messages {
+        height: 24px;
+        width: 240px;
+        text-indent: 5px;
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 24px;
+        color: #666;
+        background-color: #ccc;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+    .messages:hover {
+        background-color: #fff;
+    }
+
+    .talk_send {
+        width: 50px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+        border: 0px;
+        margin-left: 2px;
+        color: #fff;
+        background-repeat: no-repeat;
+        background-position: 0px 0px;
+        background-color: transparent;
+        font-family: "微软雅黑";
+    }
+
+    .talk_send:hover {
+        background-position: 0px -24px;
+    }
+
+    .talk_record ul {
+        padding-left: 5px;
+    }
+
+    .talk_record li {
+        line-height: 25px;
+    }
+
+    .talk_word .controlbtn a {
+        margin: 12px;
+    }
+
+    .talk .talk_word .order {
+        float: left;
+        display: block;
+        height: 14px;
+        width: 16px;
+        background-repeat: no-repeat;
+        background-position: 0px 0px;
+    }
+
+    .talk .talk_word .loop {
+        float: left;
+        display: block;
+        height: 14px;
+        width: 16px;
+        background-repeat: no-repeat;
+        background-position: -30px 0px;
+    }
+
+    .talk .talk_word .single {
+        float: left;
+        display: block;
+        height: 14px;
+        width: 16px;
+        background-repeat: no-repeat;
+        background-position: -60px 0px;
+    }
+
+    .talk .talk_word .order:hover, .talk .talk_word .active {
+        background-position: 0px -20px;
+        text-decoration: none;
+    }
+
+    .talk .talk_word .loop:hover {
+        background-position: -30px -20px;
+        text-decoration: none;
+    }
+
+    .talk .talk_word .single:hover {
+        background-position: -60px -20px;
+        text-decoration: none;
+    }
+
+    /*讨论区*/
+    .jp-container .talk_recordbox {
+        min-height: 80px;
+        color: #afafaf;
+        padding-top: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-bottom: 0px;
+    }
+
+    .jp-container .talk_recordbox:first-child {
+        border-top: none;
+    }
+
+    .jp-container .talk_recordbox:last-child {
+        border-bottom: none;
+    }
+
+    .jp-container .talk_recordbox .talk_recordtextbg {
+        float: left;
+        width: 10px;
+        height: 30px;
+        display: block;
+        background-repeat: no-repeat;
+        background-position: left top;
+    }
+
+    .jp-container .talk_recordbox .talk_recordtext {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #b8d45c;
+        width: 240px;
+        height: auto;
+        display: block;
+        padding: 5px;
+        float: left;
+        color: #333333;
+    }
+
+    .jp-container .talk_recordbox h3 {
+        font-size: 14px;
+        padding: 2px 0 5px 0;
+        text-transform: uppercase;
+        font-weight: 100;
+
+    }
+
+    .jp-container .talk_recordbox .user {
+        float: left;
+        display: inline;
+        height: 45px;
+        width: 45px;
+        margin-top: 0px;
+        margin-right: 5px;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        font-size: 12px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    /*自己发言样式*/
+    .jp-container .talk_recordboxme {
+        display: block;
+        min-height: 80px;
+        color: #afafaf;
+        padding-top: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-bottom: 0px;
+    }
+
+    .jp-container .talk_recordboxme .talk_recordtextbg {
+        float: right;
+        width: 10px;
+        height: 30px;
+        display: block;
+        background-repeat: no-repeat;
+        background-position: left top;
+    }
+
+    .jp-container .talk_recordboxme .talk_recordtext {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #fcfcfc;
+        width: 240px;
+        height: auto;
+        padding: 5px;
+        color: #666;
+        font-size: 12px;
+        float: right;
+
+    }
+
+    .jp-container .talk_recordboxme h3 {
+        font-size: 14px;
+        padding: 2px 0 5px 0;
+        text-transform: uppercase;
+        font-weight: 100;
+        color: #333333;
+
+    }
+
+    .jp-container .talk_recordboxme .user {
+        float: right;
+        height: 45px;
+        width: 45px;
+        margin-top: 0px;
+        margin-right: 10px;
+        margin-bottom: 0px;
+        margin-left: 5px;
+        font-size: 12px;
+        line-height: 20px;
+        text-align: center;
+        display: inline;
+    }
+
+    .talk_time {
+        color: #666;
+        text-align: right;
+        width: 240px;
+        display: block;
+    }
+</style>
+</html>
