@@ -16,6 +16,7 @@ import io.netty.util.CharsetUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
@@ -32,7 +33,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
-        if (websocketUrl.equalsIgnoreCase(msg.getUri())) {
+        if (websocketUrl.equalsIgnoreCase(msg.uri())) {
             //如果该HTTP请求指向了websocketUrl的URL,那么直接交给下一个ChannelInboundHandler进行处理
             ctx.fireChannelRead(msg.retain());
         } else {
@@ -51,9 +52,9 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     public static ByteBuf loadIndexHtml() {
         InputStreamReader isr = null;
         BufferedReader raf = null;
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
         try {
-            isr = new InputStreamReader(ClassLoader.getSystemResourceAsStream(INDEX));
+            isr = new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream(INDEX)));
             raf = new BufferedReader(isr);
             String s = null;
             // 读取文件内容，并将其打印
@@ -64,8 +65,12 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
             e.printStackTrace();
         } finally {
             try {
-                isr.close();
-                raf.close();
+                if (isr != null) {
+                    isr.close();
+                }
+                if (raf != null) {
+                    raf.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -73,12 +78,11 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
         return Unpooled.copiedBuffer(content.toString().getBytes());
     }
 
-    /*发送应答*/
     private static void sendHttpResponse(ChannelHandlerContext ctx,
                                          FullHttpRequest req,
                                          FullHttpResponse res) {
-        // 错误的请求进行处理 （code<>200).
-        if (res.status().code() != 200) {
+        // 错误的请求进行处理 （code<>200)
+        if (res.status().code() != OK.code()) {
             ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(),
                     CharsetUtil.UTF_8);
             res.content().writeBytes(buf);
@@ -86,10 +90,10 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
             HttpUtil.setContentLength(res, res.content().readableBytes());
         }
 
-        // 发送应答.
+        // 发送应答
         ChannelFuture f = ctx.channel().writeAndFlush(res);
         //对于不是长连接或者错误的请求直接关闭连接
-        if (!HttpUtil.isKeepAlive(req) || res.status().code() != 200) {
+        if (!HttpUtil.isKeepAlive(req) || res.status().code() != OK.code()) {
             f.addListener(ChannelFutureListener.CLOSE);
         }
     }

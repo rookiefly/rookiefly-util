@@ -18,7 +18,7 @@ public class WebSocketServer {
     private static final int PORT = 8761;
 
     //创建 DefaultChannelGroup，用来保存所有已经连接的 WebSocket Channel，群发和一对一功能可以用上
-    private final static ChannelGroup channelGroup =
+    private static ChannelGroup channelGroup =
             new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);
 
     public static void startServer() {
