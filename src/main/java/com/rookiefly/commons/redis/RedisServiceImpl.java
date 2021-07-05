@@ -546,50 +546,44 @@ public class RedisServiceImpl implements RedisService {
                 return;
             }
             jedis = new Jedis(addrInfo[0], Integer.valueOf(addrInfo[1]));
-            Thread t1 = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        while (reSubFail.compareAndSet(true, false) == false)
-                            ;
-                        jedis.subscribe(pubSub, channels);
-                    } catch (Throwable e) {
-                        reSubFail.set(true);
-                        logger.error("redis subscribe " + channelStr + "@" + redisAddr
-                                + " has failed will try to resubscribe after " + redisSubMaintainInterval
-                                + " millis", e);
-                    }
+            Thread t1 = new Thread(() -> {
+                try {
+                    while (reSubFail.compareAndSet(true, false) == false)
+                        ;
+                    jedis.subscribe(pubSub, channels);
+                } catch (Throwable e) {
+                    reSubFail.set(true);
+                    logger.error("redis subscribe " + channelStr + "@" + redisAddr
+                            + " has failed will try to resubscribe after " + redisSubMaintainInterval
+                            + " millis", e);
                 }
             }, "RedisSubPub-" + channelStr);
             t1.start();
             if (firstTime) {// 启动维护线程
-                Thread t2 = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            boolean metException = false;
-                            try {
-                                publish("RedisServiceImpl:test", "test");
-                            } catch (Throwable e) {
-                                logger.warn("Redis pubsub has broken:" + e.getMessage());
-                                metException = true;
-                            }
-                            if (metException || reSubFail.get() == true) {
-                                try {
-                                    jedis.disconnect();
-                                } catch (Throwable e2) {
-                                    logger.warn("fail to close old jedis subscribe", e2);
-                                }
-                                doSubScribe(false);
-                            }
-                            try {
-                                Thread.sleep(redisSubMaintainInterval);
-                            } catch (InterruptedException e) {
-                                // impossiable
-                            }
+                Thread t2 = new Thread(() -> {
+                    while (true) {
+                        boolean metException = false;
+                        try {
+                            publish("RedisServiceImpl:test", "test");
+                        } catch (Throwable e) {
+                            logger.warn("Redis pubsub has broken:" + e.getMessage());
+                            metException = true;
                         }
-
+                        if (metException || reSubFail.get() == true) {
+                            try {
+                                jedis.disconnect();
+                            } catch (Throwable e2) {
+                                logger.warn("fail to close old jedis subscribe", e2);
+                            }
+                            doSubScribe(false);
+                        }
+                        try {
+                            Thread.sleep(redisSubMaintainInterval);
+                        } catch (InterruptedException e) {
+                            // impossiable
+                        }
                     }
+
                 }, "RediSubPubMaintain-" + channelStr);
                 t2.start();
             }

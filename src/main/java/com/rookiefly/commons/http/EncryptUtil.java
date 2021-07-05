@@ -45,7 +45,7 @@ public class EncryptUtil {
      * @return HexString
      */
     private static String byteArrayToHexString(byte[] b) {
-        StringBuffer resultSb = new StringBuffer();
+        StringBuilder resultSb = new StringBuilder();
         for (int i = 0; i < b.length; i++) {
             resultSb.append(byteToHexString(b[i]));
         }
@@ -66,15 +66,4 @@ public class EncryptUtil {
         int d2 = n % 16;
         return hexDigits[d1] + hexDigits[d2];
     }
-
-    /**
-     * 将长网址转化为短链接
-     *
-     * @param url 长链接
-     * @return 短链接
-     */
-    public static String shortUrl(String url) {
-        return md5(url + System.currentTimeMillis()).substring(0, 8);
-    }
-
 }

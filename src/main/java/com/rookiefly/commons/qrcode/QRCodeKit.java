@@ -3,8 +3,6 @@ package com.rookiefly.commons.qrcode;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.apache.commons.codec.binary.Base64;
@@ -15,11 +13,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +30,7 @@ public class QRCodeKit {
     private static final int BLACK = 0xFF000000;
     private static final int WHITE = 0xFFFFFFFF;
 
-    public static void main(String[] args) throws IOException, NotFoundException {
+    public static void main(String[] args) throws IOException {
         String data = "https://github.com/rookiefly";
         File logoFile = new File("logo.png");
         BufferedImage image = QRCodeKit.createQRCodeWithLogo(data, logoFile);
@@ -103,8 +99,6 @@ public class QRCodeKit {
             matrix = new MultiFormatWriter().encode(new String(data.getBytes(charset), charset), BarcodeFormat.QR_CODE,
                     width, height, hint);
             return toBufferedImage(matrix);
-        } catch (WriterException e) {
-            throw new RuntimeException(e.getMessage(), e);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -193,11 +187,9 @@ public class QRCodeKit {
             Graphics2D g = (Graphics2D) combined.getGraphics();
             g.drawImage(qrcode, 0, 0, null);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-            g.drawImage(logo, (int) Math.round(deltaWidth / 2), (int) Math.round(deltaHeight / 2), null);
+            g.drawImage(logo, Math.round(deltaWidth / 2), Math.round(deltaHeight / 2), null);
 
             return combined;
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -211,14 +203,12 @@ public class QRCodeKit {
      * @author stefli
      */
     public static String getImageBase64String(BufferedImage image) {
-        String result = null;
+        String result;
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             OutputStream b64 = new Base64OutputStream(os);
             ImageIO.write(image, "png", b64);
             result = os.toString("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage(), e);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -240,14 +230,8 @@ public class QRCodeKit {
             os = new FileOutputStream(file.getAbsolutePath());
             os.write(bs);
             os.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-
-
 }

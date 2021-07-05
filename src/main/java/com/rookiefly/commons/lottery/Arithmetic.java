@@ -9,11 +9,12 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Arithmetic {
-    private static final int mulriple = 1000000;
 
-    private Map<Integer, int[]> prizeScopes = new HashMap<Integer, int[]>();
+    private static final int MULRIPLE = 1000000;
 
-    private Map<Integer, Integer> prizeQuantity = new HashMap<Integer, Integer>();
+    private Map<Integer, int[]> prizeScopes = new HashMap<>();
+
+    private Map<Integer, Integer> prizeQuantity = new HashMap<>();
 
     public Arithmetic(List<Prize> prizes) {
         init(prizes);
@@ -21,7 +22,7 @@ public class Arithmetic {
 
     public int lottery() {
         // 获取1-1000000之间的一个随机数
-        int luckyNumber = ThreadLocalRandom.current().nextInt(mulriple);
+        int luckyNumber = ThreadLocalRandom.current().nextInt(MULRIPLE);
         int luckyPrizeId = 0;
         // 查找随机数所在的区间
         if ((null != prizeScopes) && !prizeScopes.isEmpty()) {
@@ -52,7 +53,7 @@ public class Arithmetic {
         for (Prize prize : prizes) {
             int prizeId = prize.getPrizeId();
             // 划分区间
-            int currentScope = lastScope + prize.getProbability().multiply(new BigDecimal(mulriple)).intValue();
+            int currentScope = lastScope + prize.getProbability().multiply(new BigDecimal(MULRIPLE)).intValue();
             prizeScopes.put(prizeId, new int[]{lastScope + 1, currentScope});
             prizeQuantity.put(prizeId, prize.getQuantity());
 

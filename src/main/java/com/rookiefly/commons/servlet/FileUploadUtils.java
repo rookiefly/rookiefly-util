@@ -5,7 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * 文件上传的工具类
@@ -85,9 +84,8 @@ public class FileUploadUtils {
      * @param file
      * @param baseDir
      * @return
-     * @throws UnsupportedEncodingException
      */
-    public static final String extractFilename(MultipartFile file, String baseDir) throws UnsupportedEncodingException {
+    public static final String extractFilename(MultipartFile file, String baseDir) {
         String filename = file.getOriginalFilename();
         int slashIndex = filename.indexOf("/");
         if (slashIndex >= 0) {

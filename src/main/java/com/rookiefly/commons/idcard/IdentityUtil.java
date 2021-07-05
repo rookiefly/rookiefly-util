@@ -12,13 +12,13 @@ public class IdentityUtil {
 
     private static Log log = new ConsoleLog(IdentityUtil.class);
     // wi =2(n-1)(mod 11)
-    private final static int[] wi =
+    private static final int[] wi =
             {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1};
     // verify digit
-    private final static int[] vi =
+    private static final int[] vi =
             {1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2};
 
-    private static Map<String, String> provinceMap = new HashMap<String, String>();
+    private static Map<String, String> provinceMap = new HashMap<>();
 
     static {
         provinceMap.put("11", "北京");

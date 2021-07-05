@@ -92,7 +92,7 @@ public class IDCardUtils {
         }
 
         if (null != c) {
-            int bit[] = new int[idcard17.length()];
+            int bit[];
 
             bit = converCharToInt(c);
 

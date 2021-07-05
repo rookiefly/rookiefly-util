@@ -11,7 +11,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * @author rookiefly
  * 拼音处理工具
  */
-public abstract class PinYin4JUtil {
+public class PinYin4JUtil {
 
     /**
      * 将汉字转换为全拼
@@ -20,11 +20,9 @@ public abstract class PinYin4JUtil {
      * @return String
      */
     public static String getPinYin(String src) {
-        char[] t1 = null;
-        t1 = src.toCharArray();
-        String[] t2 = new String[t1.length];
+        char[] t1 = src.toCharArray();
+        String[] t2;
         // 设置汉字拼音输出的格式
-
         HanyuPinyinOutputFormat t3 = new HanyuPinyinOutputFormat();
         t3.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         t3.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
@@ -97,7 +95,7 @@ public abstract class PinYin4JUtil {
     public static String chinaToUnicode(String str) {
         String result = "";
         for (int i = 0; i < str.length(); i++) {
-            int chr1 = (char) str.charAt(i);
+            int chr1 = str.charAt(i);
             if (chr1 >= 19968 && chr1 <= 171941) {//汉字范围 \u4e00-\u9fa5 (中文)
                 result += "\\u" + Integer.toHexString(chr1);
             } else {

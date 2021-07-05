@@ -23,8 +23,7 @@ public class ShortUrlGenerator {
 
         };
         // 对传入网址进行 MD5 加密
-        String sMD5EncryptResult = EncryptUtil.md5(key + url);
-        String hex = sMD5EncryptResult;
+        String hex = EncryptUtil.md5(key + url);
 
         String[] resUrl = new String[4];
         for (int i = 0; i < 4; i++) {
@@ -34,17 +33,17 @@ public class ShortUrlGenerator {
 
             // 这里需要使用 long 型来转换，因为 Inteper .parseInt() 只能处理 31 位 , 首位为符号位 , 如果不用 long ，则会越界
             long lHexLong = 0x3FFFFFFF & Long.parseLong(sTempSubString, 16);
-            String outChars = "";
+            StringBuilder outChars = new StringBuilder();
             for (int j = 0; j < 6; j++) {
                 // 把得到的值与 0x0000003D 进行位与运算，取得字符数组 chars 索引
                 long index = 0x0000003D & lHexLong;
                 // 把取得的字符相加
-                outChars += chars[(int) index];
+                outChars.append(chars[(int) index]);
                 // 每次循环按位右移 5 位
                 lHexLong = lHexLong >> 5;
             }
             // 把字符串存入对应索引的输出数组
-            resUrl[i] = outChars;
+            resUrl[i] = outChars.toString();
         }
         return resUrl;
     }

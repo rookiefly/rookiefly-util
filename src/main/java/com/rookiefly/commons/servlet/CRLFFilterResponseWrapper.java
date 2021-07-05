@@ -19,9 +19,9 @@ public class CRLFFilterResponseWrapper extends HttpServletResponseWrapper {
         Arrays.sort(headerName_tspecials);
     }
 
-    HttpServletResponse response = null;
+    HttpServletResponse response;
 
-    public CRLFFilterResponseWrapper(HttpServletResponse response) throws IOException {
+    public CRLFFilterResponseWrapper(HttpServletResponse response) {
 
         super(response);
         this.response = response;

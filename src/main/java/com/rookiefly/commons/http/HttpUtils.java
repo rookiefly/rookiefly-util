@@ -24,20 +24,17 @@ public class HttpUtils {
      * @param callBack
      */
     public static void doGetAsyn(final String urlStr, final CallBack callBack) {
-        new Thread() {
-            public void run() {
-                try {
-                    String result = doGet(urlStr);
-                    if (callBack != null) {
-                        callBack.onRequestComplete(result);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+        new Thread(() -> {
+            try {
+                String result = doGet(urlStr);
+                if (callBack != null) {
+                    callBack.onRequestComplete(result);
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        }.start();
+        }).start();
     }
 
     /**
@@ -50,19 +47,17 @@ public class HttpUtils {
      */
     public static void doPostAsyn(final String urlStr, final String params,
                                   final CallBack callBack) {
-        new Thread() {
-            public void run() {
-                try {
-                    String result = doPost(urlStr, params);
-                    if (callBack != null) {
-                        callBack.onRequestComplete(result);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+        new Thread(() -> {
+            try {
+                String result = doPost(urlStr, params);
+                if (callBack != null) {
+                    callBack.onRequestComplete(result);
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }.start();
+
+        }).start();
 
     }
 

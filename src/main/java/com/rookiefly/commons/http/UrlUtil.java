@@ -21,17 +21,15 @@ public class UrlUtil {
         strURL = strURL.trim();
         if (strURL.length() > 1) {
             String[] urlSplit = strURL.split("[?]");
-            if (urlSplit.length > 1) {
-                if (urlSplit[1] != null) {
-                    queryString = urlSplit[1];
-                }
+            if (urlSplit.length > 1 && urlSplit[1] != null) {
+                queryString = urlSplit[1];
             }
         }
         return queryString;
     }
 
     public static Map<String, String> getQueryMap(String url) {
-        Map<String, String> mapRequest = new HashMap<String, String>();
+        Map<String, String> mapRequest = new HashMap<>();
         String[] arrSplit = null;
         String strUrlParam = getQuery(url);
         if (strUrlParam == null) {
@@ -43,10 +41,8 @@ public class UrlUtil {
             arrSplitEqual = strSplit.split("[=]");
             if (arrSplitEqual.length > 1) {
                 mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
-            } else {
-                if (arrSplitEqual[0] != "") {
-                    mapRequest.put(arrSplitEqual[0], "");
-                }
+            } else if (!arrSplitEqual[0].equals("")) {
+                mapRequest.put(arrSplitEqual[0], "");
             }
         }
         return mapRequest;

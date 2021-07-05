@@ -27,20 +27,16 @@ public class MobileUtil {
         return m.matches();
     }
 
-    public static String formatMobile(String mobile, int size, int prefixSize, int profixSize) {
-
-        if (mobile != null)
-            return "";
+    public static String formatMobile(String mobile, int size, int prefixSize) {
         if (mobile.length() < 11)
             return mobile;
         StringBuilder builder = new StringBuilder();
-
         String mobilePre = mobile.substring(0, prefixSize);
         builder.append(mobilePre);
         for (int i = 0; i < size; i++) {
             builder.append('*');
         }
-        String mobileEnd = mobile.substring(mobile.length() - 4, mobile.length());
+        String mobileEnd = mobile.substring(mobile.length() - 4);
         builder.append(mobileEnd);
         return builder.toString();
     }

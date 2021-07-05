@@ -10,5 +10,6 @@ public class MobileTest {
     public void test01() {
         Assert.assertTrue(MobileUtil.isRegualTel("0571-8342343"));
         Assert.assertTrue(MobileUtil.isRegualMob("13185028561"));
+        System.out.println(MobileUtil.formatMobile("13185028561", 4,3));
     }
 }
